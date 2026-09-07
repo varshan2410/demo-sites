@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function ThemeToggle({ label }: { label: string }) {
   const [isDark, setIsDark] = useState(false);
+  const transitionTimeout = useRef<number | null>(null);
 
   useEffect(() => {
     const savedTheme = window.localStorage.getItem("cydo-theme");
@@ -17,9 +18,16 @@ export default function ThemeToggle({ label }: { label: string }) {
 
   function toggleTheme() {
     const nextTheme = !isDark;
-    document.documentElement.classList.toggle("dark", nextTheme);
-    window.localStorage.setItem("cydo-theme", nextTheme ? "dark" : "light");
-    setIsDark(nextTheme);
+    const root = document.documentElement;
+    root.classList.add("theme-transition");
+    if (transitionTimeout.current) window.clearTimeout(transitionTimeout.current);
+
+    requestAnimationFrame(() => {
+      root.classList.toggle("dark", nextTheme);
+      window.localStorage.setItem("cydo-theme", nextTheme ? "dark" : "light");
+      setIsDark(nextTheme);
+      transitionTimeout.current = window.setTimeout(() => root.classList.remove("theme-transition"), 280);
+    });
   }
 
   return (

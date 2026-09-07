@@ -99,6 +99,14 @@ html.dark body {
   background: #020617;
 }
 
+/* Applied only while the theme toggle is active; layout properties are excluded. */
+.theme-transition,
+.theme-transition * {
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow !important;
+  transition-duration: 260ms !important;
+  transition-timing-function: ease-in-out !important;
+}
+
 /* A short entrance transition keeps route changes calm without delaying navigation. */
 .page-transition {
   animation: page-enter 220ms ease-out both;

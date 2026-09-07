@@ -1,4 +1,4 @@
-const CACHE_NAME = "cydo-demo-sites-v2";
+const CACHE_NAME = "cydo-demo-sites-v3";
 const APP_SHELL = ["/", "/clinic", "/hotel", "/restaurant", "/offline.html"];
 
 self.addEventListener("install", (event) => {
@@ -23,7 +23,14 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET") return;
 
   const url = new URL(request.url);
-  if (url.origin !== self.location.origin || url.pathname.startsWith("/api/") || url.pathname.includes("webpack-hmr")) return;
+  // Next.js owns the caching policy for its hashed build assets. Excluding these
+  // also prevents stale development chunks if localhost was previously controlled.
+  if (
+    url.origin !== self.location.origin ||
+    url.pathname.startsWith("/api/") ||
+    url.pathname.startsWith("/_next/") ||
+    url.pathname.includes("webpack-hmr")
+  ) return;
 
   if (request.mode === "navigate") {
     event.respondWith(networkFirst(request));

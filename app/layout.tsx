@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import OfflineSubmissionQueue from "@/components/OfflineSubmissionQueue";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 
 export const metadata: Metadata = {
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <ServiceWorkerRegistration />
+        <OfflineSubmissionQueue />
         {children}
       </body>
     </html>

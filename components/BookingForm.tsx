@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { ClinicConfig } from "@/types/site";
 import { useLanguage } from "@/components/LanguageProvider";
+import { queueSubmission } from "@/lib/offlineQueue";
 
 type BookingDetails = Record<"name" | "service" | "doctor" | "date" | "time", string>;
 type FieldErrors = Record<string, string[] | undefined>;
@@ -22,17 +23,26 @@ export default function BookingForm({ config }: { config: ClinicConfig }) {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
+    const payload = Object.fromEntries(formData) as Record<string, unknown>;
     setIsSubmitting(true);
     setError("");
     setFieldErrors({});
     try {
-      const response = await fetch("/api/clinic/appointments", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.fromEntries(formData)) });
+      if (!navigator.onLine) {
+        queueSubmission("/api/clinic/appointments", payload);
+        setError("You are offline. Your appointment request is queued and will send when you reconnect.");
+        return;
+      }
+      const response = await fetch("/api/clinic/appointments", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       const result = await response.json();
       if (!response.ok) { setError(result.error ?? "Please check your details and try again."); setFieldErrors(result.fields ?? {}); return; }
       await new Promise((resolve) => setTimeout(resolve, 280));
       setBooking({ name: result.data.name, service: config.services.find((service) => service.id === result.data.service)?.name ?? result.data.service, doctor: result.data.doctor, date: result.data.date, time: result.data.time });
       setReference(result.reference);
-    } catch (submitError) { setError(submitError instanceof Error ? submitError.message : "Unable to submit request."); }
+    } catch {
+      queueSubmission("/api/clinic/appointments", payload);
+      setError("We could not reach the server. Your appointment request is queued and will retry when you reconnect.");
+    }
     finally { setIsSubmitting(false); }
   }
 

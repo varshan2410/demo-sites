@@ -9,7 +9,7 @@
 | Restaurant WhatsApp order | Complete | Category filtering, dietary tags, cart and formatted order message. |
 | Restaurant reservation | Complete | Reservation request and reference confirmation. |
 | Light/dark theme | Complete | System preference plus manual persisted toggle. |
-| PWA/offline visited pages | Complete | The app shell is pre-cached; pages use network-first updates while static assets use cache-first delivery. Queued submissions remain intentionally deferred. |
+| PWA/offline visited pages | Complete | The app shell is pre-cached; pages use network-first updates while static assets use cache-first delivery. Failed form requests queue locally and retry when connectivity returns. |
 | Optimized image delivery | Complete | All content imagery uses Next.js responsive image delivery with AVIF/WebP negotiation. |
 | PDF exports | Simplified | Print-ready confirmation/voucher views use the browser print dialog. |
 | Multilingual content | Simplified | Shared persisted language switcher, Sinhala/Tamil-capable fonts, translated navigation, core headings, forms, clinic services, hotel rooms and restaurant menu. Secondary descriptive copy still needs native-language review. |

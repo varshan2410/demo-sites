@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { RestaurantConfig } from "@/types/site";
+import { queueSubmission } from "@/lib/offlineQueue";
 
 type Reservation = { name: string; phone: string; date: string; time: string; party: number };
 type FieldErrors = Record<string, string[] | undefined>;
@@ -25,10 +26,16 @@ export default function RestaurantReservationForm({
     setFieldErrors({});
 
     try {
+      const payload = Object.fromEntries(new FormData(event.currentTarget)) as Record<string, unknown>;
+      if (!navigator.onLine) {
+        queueSubmission("/api/restaurant/reservations", payload);
+        setError("You are offline. Your table request is queued and will send when you reconnect.");
+        return;
+      }
       const response = await fetch("/api/restaurant/reservations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(new FormData(event.currentTarget))),
+        body: JSON.stringify(payload),
       });
       const result = await response.json();
       if (!response.ok) {
@@ -40,8 +47,10 @@ export default function RestaurantReservationForm({
 
       await new Promise((resolve) => setTimeout(resolve, 280));
       onConfirmed(result.data, result.reference);
-    } catch (submitError) {
-      setError(submitError instanceof Error ? submitError.message : "Unable to submit reservation.");
+    } catch {
+      const payload = Object.fromEntries(new FormData(event.currentTarget)) as Record<string, unknown>;
+      queueSubmission("/api/restaurant/reservations", payload);
+      setError("We could not reach the server. Your table request is queued and will retry when you reconnect.");
     } finally {
       setIsSubmitting(false);
     }

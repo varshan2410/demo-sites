@@ -9,6 +9,7 @@ import { useLanguage } from "@/components/LanguageProvider";
 import ExperienceGallery from "@/components/ExperienceGallery";
 import BusinessContactSection from "@/components/BusinessContactSection";
 import HotelTravelDetails from "@/components/HotelTravelDetails";
+import { queueSubmission } from "@/lib/offlineQueue";
 
 type Currency = "LKR" | "USD" | "EUR" | "GBP";
 type FieldErrors = Record<string, string[] | undefined>;
@@ -45,15 +46,24 @@ export default function HotelExperience({ config: sourceConfig }: { config: Hote
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const room = config.rooms.find((item) => item.id === data.get("room"));
+    const payload = { name: data.get("name"), phone: data.get("phone"), room: data.get("room"), checkIn: data.get("check-in"), checkOut: data.get("check-out"), guests: data.get("guests"), website: data.get("website") };
     setIsSubmitting(true); setError(""); setFieldErrors({});
     try {
-      const response = await fetch("/api/hotel/enquiries", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: data.get("name"), phone: data.get("phone"), room: data.get("room"), checkIn: data.get("check-in"), checkOut: data.get("check-out"), guests: data.get("guests") }) });
+      if (!navigator.onLine) {
+        queueSubmission("/api/hotel/enquiries", payload);
+        setError("You are offline. Your stay enquiry is queued and will send when you reconnect.");
+        return;
+      }
+      const response = await fetch("/api/hotel/enquiries", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       const result = await response.json();
       if (!response.ok) { setError(result.error ?? "Please check your details and try again."); setFieldErrors(result.fields ?? {}); return; }
       await new Promise((resolve) => setTimeout(resolve, 280));
       setReference(result.reference);
       setEnquiry({ name: result.data.name, room: room?.name ?? result.data.room, checkIn: result.data.checkIn, checkOut: result.data.checkOut, guests: String(result.data.guests) });
-    } catch (submitError) { setError(submitError instanceof Error ? submitError.message : "Unable to submit enquiry."); }
+    } catch {
+      queueSubmission("/api/hotel/enquiries", payload);
+      setError("We could not reach the server. Your stay enquiry is queued and will retry when you reconnect.");
+    }
     finally { setIsSubmitting(false); }
   }
 

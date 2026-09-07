@@ -50,23 +50,24 @@ html.dark body {
   background: #020617;
 }
 
+#appointment-receipt { display: none; }
+
 @media print {
-  body * {
-    visibility: hidden;
+  @page { size: A4; margin: 14mm; }
+
+  body:has(#appointment-receipt) > * { display: none !important; }
+  body:has(#appointment-receipt) > #appointment-receipt { display: block !important; }
+
+  #appointment-receipt {
+    color: #0f172a;
+    font-family: Arial, sans-serif;
   }
 
-  #booking-confirmation,
-  #booking-confirmation *,
-  #hotel-voucher,
-  #hotel-voucher * {
-    visibility: visible;
-  }
-
-  #booking-confirmation,
-  #hotel-voucher {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    box-shadow: none;
-  }
+  #appointment-receipt .receipt-card { border: 1px solid #cbd5e1; border-radius: 12px; overflow: hidden; }
+  #appointment-receipt .receipt-header { padding: 24px; color: white; }
+  #appointment-receipt .receipt-body { padding: 24px; }
+  #appointment-receipt .receipt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 28px; }
+  #appointment-receipt .receipt-label { margin: 0 0 4px; color: #64748b; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  #appointment-receipt .receipt-value { margin: 0; font-size: 14px; font-weight: 600; }
+  #appointment-receipt .receipt-footer { margin-top: 24px; border-top: 1px solid #e2e8f0; padding-top: 16px; color: #475569; font-size: 12px; line-height: 1.5; }
 }

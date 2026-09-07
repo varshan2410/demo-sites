@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import type { ClinicConfig } from "@/types/site";
 import { useLanguage } from "@/components/LanguageProvider";
 
@@ -12,6 +13,9 @@ export default function BookingForm({ config }: { config: ClinicConfig }) {
   const [booking, setBooking] = useState<BookingDetails | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => setIsMounted(true), []);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -43,31 +47,36 @@ export default function BookingForm({ config }: { config: ClinicConfig }) {
 
   if (booking) {
     return (
-      <section id="booking" className="bg-slate-50 px-6 py-16 dark:bg-slate-900 md:py-24">
-        <div id="booking-confirmation" className="mx-auto max-w-xl rounded-3xl bg-white p-8 text-center shadow-sm ring-1 ring-slate-200 dark:bg-slate-950 dark:ring-slate-800">
-          <h2 className="mb-2 text-2xl font-semibold dark:text-white">{t("clinic.labels.confirmationTitle", config.labels.confirmationTitle)}</h2>
-          <p className="mb-2 text-slate-600 dark:text-slate-300">{config.labels.confirmationReference.replace("{reference}", reference)}</p>
-          <p className="text-slate-600 dark:text-slate-300">{t("clinic.labels.confirmationMessage", config.labels.confirmationMessage)}</p>
-          <div className="mt-7 rounded-2xl bg-slate-50 p-5 text-left dark:bg-slate-900">
-            <h3 className="font-semibold dark:text-white">{t("clinic.labels.bookingDetailsTitle", config.labels.bookingDetailsTitle)}</h3>
-            <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
-              <div><dt className="text-slate-500 dark:text-slate-400">{t("clinic.labels.nameLabel", config.labels.nameLabel)}</dt><dd className="font-medium dark:text-white">{booking.name}</dd></div>
-              <div><dt className="text-slate-500 dark:text-slate-400">{t("clinic.labels.serviceLabel", config.labels.serviceLabel)}</dt><dd className="font-medium dark:text-white">{booking.service}</dd></div>
-              <div><dt className="text-slate-500 dark:text-slate-400">{config.labels.doctorLabel}</dt><dd className="font-medium dark:text-white">{booking.doctor}</dd></div>
-              <div><dt className="text-slate-500 dark:text-slate-400">{config.labels.requestedDateLabel}</dt><dd className="font-medium dark:text-white">{booking.date}</dd></div>
-              <div><dt className="text-slate-500 dark:text-slate-400">{config.labels.requestedTimeLabel}</dt><dd className="font-medium dark:text-white">{booking.time}</dd></div>
-            </dl>
+      <>
+        <section id="booking" className="bg-slate-50 px-6 py-16 dark:bg-slate-900 md:py-24">
+          <div id="booking-confirmation" className="mx-auto max-w-xl rounded-3xl bg-white p-8 text-center shadow-sm ring-1 ring-slate-200 dark:bg-slate-950 dark:ring-slate-800">
+            <h2 className="mb-2 text-2xl font-semibold dark:text-white">{t("clinic.labels.confirmationTitle", config.labels.confirmationTitle)}</h2>
+            <p className="mb-2 text-slate-600 dark:text-slate-300">{config.labels.confirmationReference.replace("{reference}", reference)}</p>
+            <p className="text-slate-600 dark:text-slate-300">{t("clinic.labels.confirmationMessage", config.labels.confirmationMessage)}</p>
+            <div className="mt-7 rounded-2xl bg-slate-50 p-5 text-left dark:bg-slate-900">
+              <h3 className="font-semibold dark:text-white">{t("clinic.labels.bookingDetailsTitle", config.labels.bookingDetailsTitle)}</h3>
+              <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
+                <div><dt className="text-slate-500 dark:text-slate-400">{t("clinic.labels.nameLabel", config.labels.nameLabel)}</dt><dd className="font-medium dark:text-white">{booking.name}</dd></div>
+                <div><dt className="text-slate-500 dark:text-slate-400">{t("clinic.labels.serviceLabel", config.labels.serviceLabel)}</dt><dd className="font-medium dark:text-white">{booking.service}</dd></div>
+                <div><dt className="text-slate-500 dark:text-slate-400">{config.labels.doctorLabel}</dt><dd className="font-medium dark:text-white">{booking.doctor}</dd></div>
+                <div><dt className="text-slate-500 dark:text-slate-400">{config.labels.requestedDateLabel}</dt><dd className="font-medium dark:text-white">{booking.date}</dd></div>
+                <div><dt className="text-slate-500 dark:text-slate-400">{config.labels.requestedTimeLabel}</dt><dd className="font-medium dark:text-white">{booking.time}</dd></div>
+              </dl>
+            </div>
+            <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+              <a href={"https://wa.me/" + config.whatsapp.number + "?text=" + encodeURIComponent(formatWhatsAppMessage())} target="_blank" rel="noopener noreferrer" className="ui-button rounded-full px-5 py-3 text-sm font-semibold text-white" style={{ backgroundColor: config.theme.primary }}>{config.labels.confirmationWhatsAppLabel}</a>
+              <button type="button" onClick={() => window.print()} className="ui-button rounded-full border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 dark:border-slate-700 dark:text-slate-200">{config.labels.printConfirmationLabel}</button>
+            </div>
           </div>
-          <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-            <a href={"https://wa.me/" + config.whatsapp.number + "?text=" + encodeURIComponent(formatWhatsAppMessage())} target="_blank" rel="noopener noreferrer" className="ui-button rounded-full px-5 py-3 text-sm font-semibold text-white" style={{ backgroundColor: config.theme.primary }}>
-              {config.labels.confirmationWhatsAppLabel}
-            </a>
-            <button type="button" onClick={() => window.print()} className="ui-button rounded-full border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 dark:border-slate-700 dark:text-slate-200">
-              {config.labels.printConfirmationLabel}
-            </button>
-          </div>
-        </div>
-      </section>
+        </section>
+        {isMounted ? createPortal(
+          <article id="appointment-receipt">
+            <div className="receipt-card">
+              <header className="receipt-header" style={{ backgroundColor: config.theme.primary }}><p style={{ margin: 0, fontSize: 12, fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase" }}>Appointment receipt</p><h1 style={{ margin: "8px 0 0", fontSize: 26 }}>{config.siteName}</h1><p style={{ margin: "6px 0 0", opacity: .86 }}>{config.contact.address}</p></header>
+              <div className="receipt-body"><p style={{ margin: "0 0 20px", fontSize: 15 }}>Request received · Reference <strong>{reference}</strong></p><div className="receipt-grid"><div><p className="receipt-label">Patient</p><p className="receipt-value">{booking.name}</p></div><div><p className="receipt-label">Treatment</p><p className="receipt-value">{booking.service}</p></div><div><p className="receipt-label">Preferred dentist</p><p className="receipt-value">{booking.doctor}</p></div><div><p className="receipt-label">Requested date</p><p className="receipt-value">{booking.date}</p></div><div><p className="receipt-label">Requested time</p><p className="receipt-value">{booking.time}</p></div><div><p className="receipt-label">Status</p><p className="receipt-value">Pending confirmation</p></div></div><footer className="receipt-footer">This is a request receipt, not a confirmed appointment. Our team will contact you via WhatsApp to confirm your visit.<br />{config.contact.hours}</footer></div>
+            </div>
+          </article>, document.body) : null}
+      </>
     );
   }
 

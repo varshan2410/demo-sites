@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import type { SiteShellConfig } from "@/types/site";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -13,8 +14,9 @@ export default function SiteHeader({ config }: { config: SiteShellConfig }) {
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/95 backdrop-blur dark:border-slate-800 dark:bg-slate-950/95">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-6">
-        <a href="#home" className="text-base font-bold tracking-tight text-slate-900 dark:text-white">
-          {config.theme.logoText}
+        <a href="#home" className="group inline-flex items-center gap-2.5 text-slate-900 dark:text-white" aria-label={`${config.theme.logoText} home`}>
+          <Image src={config.theme.logoImage} alt="" width={40} height={40} className="brand-logo" priority />
+          <span className="brand-name">{config.theme.logoText}</span>
         </a>
         <div className="flex items-center gap-2">
           <nav className="hidden items-center gap-1 md:flex" aria-label="Primary navigation">

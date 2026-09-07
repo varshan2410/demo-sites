@@ -7,24 +7,66 @@ body {
   background: #ffffff;
 }
 
+.brand-logo {
+  display: inline-flex;
+  height: 2rem;
+  width: 2rem;
+  object-fit: contain;
+  box-shadow: 0 5px 12px rgba(15, 23, 42, 0.16);
+  transition: transform 180ms ease, filter 180ms ease, box-shadow 180ms ease;
+}
+
+.group:hover .brand-logo {
+  transform: rotate(-5deg) scale(1.06);
+  filter: saturate(1.1);
+  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.2);
+}
+
+.brand-name {
+  font-size: 0.96rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
 /* Consistent, restrained interaction feedback for every action control. */
 .ui-button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   transition: transform 180ms ease, filter 180ms ease, background-color 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
 }
 
 .ui-button:hover:not(:disabled) {
-  transform: translateY(-1px);
-  filter: brightness(0.97);
+  transform: translateY(-2px) scale(1.01);
+  filter: brightness(1.06) saturate(1.04);
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.18);
 }
 
 .ui-button:active:not(:disabled) {
   transform: translateY(0);
-  filter: brightness(0.94);
+  filter: brightness(0.96);
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.12);
 }
 
 .ui-button:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 3px;
+}
+
+.ui-button::after {
+  content: "";
+  position: absolute;
+  inset: -45% auto -45% -55%;
+  z-index: 0;
+  width: 35%;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.34), transparent);
+  transform: skewX(-20deg) translateX(-260%);
+  transition: transform 420ms ease;
+}
+
+.ui-button:hover:not(:disabled)::after {
+  transform: skewX(-20deg) translateX(620%);
 }
 
 /* Covers compact controls whose styles are supplied by the individual demo. */
@@ -33,13 +75,15 @@ button {
 }
 
 button:hover:not(:disabled) {
-  transform: translateY(-1px);
-  filter: brightness(0.97);
+  transform: translateY(-2px) scale(1.01);
+  filter: brightness(1.05) saturate(1.03);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.14);
 }
 
 button:active:not(:disabled) {
   transform: translateY(0);
   filter: brightness(0.94);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.1);
 }
 
 html {

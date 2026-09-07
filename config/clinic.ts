@@ -9,6 +9,7 @@ export const clinicConfig = {
     primaryDark: "#085041",
     font: "system-ui, sans-serif",
     logoText: "Sunshine Dental",
+    logoImage: "/images/logos/sunshine-dental-logo.png",
   },
   hero: {
     title: "Your smile, looked after properly",

@@ -9,6 +9,7 @@ export const hotelConfig = {
     primaryDark: "#60311B",
     font: "'Noto Sans Sinhala', 'Noto Sans Tamil', Georgia, 'Times New Roman', serif",
     logoText: "Kahanda Cove",
+    logoImage: "/images/logos/kahanda-cove-logo.png",
   },
   hero: {
     title: "A quieter kind of escape.",

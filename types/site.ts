@@ -3,6 +3,7 @@ export interface ThemeConfig {
   primaryDark: string;
   font: string;
   logoText: string;
+  logoImage: string;
 }
 
 export interface HeroConfig {

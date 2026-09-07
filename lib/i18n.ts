@@ -95,3 +95,17 @@ Object.assign(translations.si, {
 Object.assign(translations.ta, {
   "hotel.labels.roomDetailsLabel": "அறை விவரங்களைப் பார்க்கவும்",
 });
+
+Object.assign(translations.si, {
+  "restaurant.labels.specialsEyebrow": "අද මේසයේ", "restaurant.labels.specialsTitle": "දිනපතා විශේෂ", "restaurant.labels.deliveryLabel": "බෙදාහැරීමේ ප්‍රදේශය",
+  "restaurant.special.market-curry.name": "වෙළඳපොළ කරි දිවා ආහාරය", "restaurant.special.market-curry.description": "කාලීන කරි තුනක්, රතු බත් සහ සම්බෝල වෙනස්වන එකතුවක්.",
+  "restaurant.special.hopper-evening.name": "ආප්ප සන්ධ්‍යාව", "restaurant.special.hopper-evening.description": "බිත්තර ආප්ප, පරිප්පු, සීනි සම්බෝල සහ නැවුම් දෙහි සෝඩා.",
+  "restaurant.deliveryRadius": "කොළඹ 03, 04, 05, 06, 07 සහ 08 පුරා බෙදාහැරීම. විශාල කොළඹ ප්‍රදේශයේ ඕනෑම තැනකට ආහාර සැපයීම පෙර ඇණවුම් කළ හැක.",
+});
+
+Object.assign(translations.ta, {
+  "restaurant.labels.specialsEyebrow": "இன்று மேசையில்", "restaurant.labels.specialsTitle": "தினசரி சிறப்புகள்", "restaurant.labels.deliveryLabel": "விநியோகப் பகுதி",
+  "restaurant.special.market-curry.name": "சந்தை கறி மதிய உணவு", "restaurant.special.market-curry.description": "பருவகால மூன்று கறிகள், சிவப்பு அரிசி மற்றும் சம்பல்களின் மாறும் தொகுப்பு.",
+  "restaurant.special.hopper-evening.name": "அப்பம் மாலை", "restaurant.special.hopper-evening.description": "முட்டை அப்பம், பருப்பு, சீனி சம்பல் மற்றும் புதிய எலுமிச்சை சோடா.",
+  "restaurant.deliveryRadius": "கொழும்பு 03, 04, 05, 06, 07 மற்றும் 08 முழுவதும் விநியோகம். பெரும் கொழும்பில் எங்கும் உணவளிப்பை முன்கூட்டியே ஆர்டர் செய்யலாம்.",
+});

@@ -215,6 +215,13 @@ export interface CateringPackage {
   minimumGuests: number;
 }
 
+export interface DailySpecial {
+  id: string;
+  name: string;
+  description: string;
+  priceLKR: number;
+}
+
 export interface RestaurantLabels extends ShellLabels {
   menuEyebrow: string;
   menuTitle: string;
@@ -243,6 +250,9 @@ export interface RestaurantLabels extends ShellLabels {
   socialTitle: string;
   socialDescription: string;
   socialCtaLabel: string;
+  specialsEyebrow: string;
+  specialsTitle: string;
+  deliveryLabel: string;
   contactEyebrow: string;
   contactTitle: string;
   mapTitle: string;
@@ -255,8 +265,10 @@ export interface RestaurantConfig extends SiteShellConfig {
   tagline: string;
   hero: HeroConfig;
   menu: MenuItem[];
+  dailySpecials: DailySpecial[];
   gallery: GalleryImage[];
   instagramUrl: string;
+  deliveryRadius: string;
   catering: CateringPackage[];
   whatsapp: WhatsAppConfig;
   labels: RestaurantLabels;

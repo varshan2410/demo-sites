@@ -22,6 +22,10 @@ export const restaurantConfig = {
     { id: "watalappan", name: "Watalappan", description: "Kithul treacle custard, roasted cashew and sea salt.", priceLKR: 850, category: "Dessert", tags: ["Vegetarian", "Gluten-free"], image: "/images/restaurant/menu/watalappan.png" },
     { id: "lime-juice", name: "Spiced lime soda", description: "Fresh lime, ginger, black salt and soda.", priceLKR: 650, category: "Drinks", tags: ["Vegan"], image: "/images/restaurant/menu/lime-soda.png" },
   ],
+  dailySpecials: [
+    { id: "market-curry", name: "Market curry lunch", description: "A changing trio of seasonal curries, red rice and sambols.", priceLKR: 1950 },
+    { id: "hopper-evening", name: "Hopper evening", description: "Egg hoppers, dhal, seeni sambol and a fresh lime soda.", priceLKR: 1650 },
+  ],
   gallery: [
     { src: "/images/restaurant/hero.webp", alt: "Sri Lankan dishes prepared at Cinnamon and Lime" },
     { src: "/images/restaurant/menu/chicken-kottu.png", alt: "Chicken kottu at Cinnamon and Lime" },
@@ -29,6 +33,7 @@ export const restaurantConfig = {
     { src: "/images/restaurant/menu/watalappan.png", alt: "Watalappan dessert at Cinnamon and Lime" },
   ],
   instagramUrl: "https://www.instagram.com/",
+  deliveryRadius: "Delivery across Colombo 03, 04, 05, 06, 07 and 08. Pre-order catering anywhere in Greater Colombo.",
   catering: [
     { name: "Garden lunch", description: "Three curries, red rice, sambols, dessert and soft drinks.", pricePerHeadLKR: 3400, minimumGuests: 20 },
     { name: "Island feast", description: "A chef-led sharing menu with seafood, hoppers and live kottu.", pricePerHeadLKR: 5200, minimumGuests: 30 },
@@ -41,7 +46,7 @@ export const restaurantConfig = {
     menuEyebrow: "The menu", menuTitle: "Flavour with a point of view", menuAllLabel: "All", orderTitle: "Your order", orderEmptyLabel: "Add something delicious to begin.", orderTotalLabel: "Total", orderWhatsAppLabel: "Order via WhatsApp",
     cateringEyebrow: "Bring the kitchen to you", cateringTitle: "Catering for gatherings worth remembering", perHeadLabel: "per person", minimumGuestsLabel: "minimum guests",
     reservationTitle: "Reserve your table", reservationNameLabel: "Full name", reservationPhoneLabel: "Phone number", reservationDateLabel: "Date", reservationTimeLabel: "Time", reservationTimePlaceholder: "Select an available time", reservationPartyLabel: "Party size", reservationSubmitLabel: "Request a table", reservationConfirmationTitle: "Table request received", reservationConfirmationReference: "Your reservation reference is {reference}.",
-    galleryEyebrow: "From our kitchen", galleryTitle: "Bold flavour, served beautifully", socialEyebrow: "Follow the fire", socialTitle: "More from the Cinnamon & Lime table", socialDescription: "Seasonal dishes, kitchen stories and lively evenings from Colombo 07.", socialCtaLabel: "Follow on Instagram", contactEyebrow: "Come hungry", contactTitle: "Find us in the heart of Colombo 07", mapTitle: "Map showing Cinnamon and Lime in Colombo 07", printMenuLabel: "Print menu", printReservationLabel: "Print reservation receipt",
+    galleryEyebrow: "From our kitchen", galleryTitle: "Bold flavour, served beautifully", socialEyebrow: "Follow the fire", socialTitle: "More from the Cinnamon & Lime table", socialDescription: "Seasonal dishes, kitchen stories and lively evenings from Colombo 07.", socialCtaLabel: "Follow on Instagram", specialsEyebrow: "Today at the table", specialsTitle: "Daily specials", deliveryLabel: "Delivery area", contactEyebrow: "Come hungry", contactTitle: "Find us in the heart of Colombo 07", mapTitle: "Map showing Cinnamon and Lime in Colombo 07", printMenuLabel: "Print menu", printReservationLabel: "Print reservation receipt",
   },
   reservationSlots: ["12:00", "13:00", "18:00", "19:00", "20:00", "21:00"],
   reservationReferencePrefix: "CLM",

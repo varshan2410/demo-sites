@@ -32,6 +32,17 @@ export interface Doctor {
   photo: string;
 }
 
+export interface GalleryImage {
+  src: string;
+  alt: string;
+}
+
+export interface BeforeAfterConfig {
+  beforeImage: string;
+  afterImage: string;
+  disclaimer: string;
+}
+
 export interface ContactConfig {
   address: string;
   hours: string;
@@ -79,6 +90,17 @@ export interface ClinicLabels {
   contactTitle: string;
   mapTitle: string;
   contactWhatsAppLabel: string;
+  galleryEyebrow: string;
+  galleryTitle: string;
+  comparisonBeforeLabel: string;
+  comparisonAfterLabel: string;
+  comparisonControlLabel: string;
+  printConfirmationLabel: string;
+  confirmationWhatsAppLabel: string;
+  bookingDetailsTitle: string;
+  requestedDateLabel: string;
+  requestedTimeLabel: string;
+  confirmationWhatsAppMessage: string;
 }
 
 export interface ClinicConfig {
@@ -90,6 +112,8 @@ export interface ClinicConfig {
   trustSignals: TrustSignal[];
   services: Service[];
   doctors: Doctor[];
+  gallery: GalleryImage[];
+  beforeAfter: BeforeAfterConfig;
   contact: ContactConfig;
   whatsapp: WhatsAppConfig;
   navigation: NavigationItem[];

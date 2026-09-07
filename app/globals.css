@@ -14,3 +14,21 @@ html {
 html.dark body {
   background: #020617;
 }
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #booking-confirmation,
+  #booking-confirmation * {
+    visibility: visible;
+  }
+
+  #booking-confirmation {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    box-shadow: none;
+  }
+}

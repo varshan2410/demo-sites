@@ -7,6 +7,7 @@ node_modules/
 .env.*
 !.env.example
 *.log
+tsconfig.tsbuildinfo
 
 # Deployment and editor files
 .vercel/

@@ -11,6 +11,7 @@ import BusinessContactSection from "@/components/BusinessContactSection";
 import HotelTravelDetails from "@/components/HotelTravelDetails";
 import { queueSubmission } from "@/lib/offlineQueue";
 import HotelPrintVoucher from "@/components/HotelPrintVoucher";
+import ArrowRightIcon from "@/components/ArrowRightIcon";
 
 type Currency = "LKR" | "USD" | "EUR" | "GBP";
 type FieldErrors = Record<string, string[] | undefined>;
@@ -87,8 +88,9 @@ export default function HotelExperience({ config: sourceConfig }: { config: Hote
             <p className="text-xs font-bold uppercase tracking-[0.24em] text-amber-100">{t("hotel.tagline", config.tagline)}</p>
             <h1 className="mt-5 text-5xl font-semibold leading-[1.02] tracking-tight md:text-7xl">{t("hotel.hero.title", config.hero.title)}</h1>
             <p className="mt-6 max-w-lg text-lg leading-8 text-stone-200">{t("hotel.hero.subtitle", config.hero.subtitle)}</p>
-            <a href="#availability" className="ui-button mt-8 inline-flex rounded-full bg-white px-6 py-3 font-semibold text-stone-950 hover:bg-amber-50">
+            <a href="#availability" className="ui-button group mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-stone-950 hover:bg-amber-50">
               {t("hotel.hero.cta", config.hero.cta)}
+              <ArrowRightIcon />
             </a>
           </div>
         </div>

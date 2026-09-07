@@ -24,6 +24,19 @@ Open http://localhost:3000.
 
 The production build statically renders every demo route.
 
+## Verify the running app
+
+With the development server running, execute:
+
+    npm run verify
+
+The smoke check covers public pages, crawler routes, essential security headers,
+the branded 404 state, rejected form payloads and successful API responses. To
+target a deployed environment, provide its URL:
+
+    $env:BASE_URL = "https://your-project.vercel.app"
+    npm run verify
+
 ## Deployment setting
 
 Set `NEXT_PUBLIC_SITE_URL` to the deployed public URL (for example,

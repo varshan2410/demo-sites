@@ -9,6 +9,7 @@ import ExperienceGallery from "@/components/ExperienceGallery";
 import BusinessContactSection from "@/components/BusinessContactSection";
 
 type Reservation = { name: string; phone: string; date: string; time: string; party: number };
+type FieldErrors = Record<string, string[] | undefined>;
 
 export default function RestaurantExperience({ config: sourceConfig }: { config: RestaurantConfig }) {
   const { t } = useLanguage();
@@ -24,6 +25,7 @@ export default function RestaurantExperience({ config: sourceConfig }: { config:
   const [reservation, setReservation] = useState<Reservation | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [isMounted, setIsMounted] = useState(false);
   const localizedMenu = config.menu.map((item) => ({ ...item, name: t("restaurant.menu." + item.id, item.name), description: t("restaurant.menuDesc." + item.id, item.description) }));
   const categories = ["ALL", ...Array.from(new Set(localizedMenu.map((item) => item.category)))];
@@ -36,11 +38,11 @@ export default function RestaurantExperience({ config: sourceConfig }: { config:
 
   async function submitReservation(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setIsSubmitting(true); setError("");
+    setIsSubmitting(true); setError(""); setFieldErrors({});
     try {
       const response = await fetch("/api/restaurant/reservations", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.fromEntries(new FormData(event.currentTarget))) });
       const result = await response.json();
-      if (!response.ok) throw new Error(result.error ?? "Please check your details and try again.");
+      if (!response.ok) { const fields = result.fields ?? {}; setError(Object.values(fields).flat().join(" ") || result.error || "Please check your details and try again."); setFieldErrors(fields); return; }
       await new Promise((resolve) => setTimeout(resolve, 280));
       setReference(result.reference); setReservation(result.data);
     } catch (submitError) { setError(submitError instanceof Error ? submitError.message : "Unable to submit reservation."); }

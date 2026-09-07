@@ -9,6 +9,7 @@ import ExperienceGallery from "@/components/ExperienceGallery";
 import BusinessContactSection from "@/components/BusinessContactSection";
 
 type Currency = "LKR" | "USD" | "EUR" | "GBP";
+type FieldErrors = Record<string, string[] | undefined>;
 
 export default function HotelExperience({ config: sourceConfig }: { config: HotelConfig }) {
   const { t } = useLanguage();
@@ -24,6 +25,7 @@ export default function HotelExperience({ config: sourceConfig }: { config: Hote
   const [enquiry, setEnquiry] = useState<Record<string, string> | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => setIsMounted(true), []);
@@ -41,11 +43,11 @@ export default function HotelExperience({ config: sourceConfig }: { config: Hote
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const room = config.rooms.find((item) => item.id === data.get("room"));
-    setIsSubmitting(true); setError("");
+    setIsSubmitting(true); setError(""); setFieldErrors({});
     try {
       const response = await fetch("/api/hotel/enquiries", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: data.get("name"), phone: data.get("phone"), room: data.get("room"), checkIn: data.get("check-in"), checkOut: data.get("check-out"), guests: data.get("guests") }) });
       const result = await response.json();
-      if (!response.ok) throw new Error(result.error ?? "Please check your details and try again.");
+      if (!response.ok) { setError(result.error ?? "Please check your details and try again."); setFieldErrors(result.fields ?? {}); return; }
       await new Promise((resolve) => setTimeout(resolve, 280));
       setReference(result.reference);
       setEnquiry({ name: result.data.name, room: room?.name ?? result.data.room, checkIn: result.data.checkIn, checkOut: result.data.checkOut, guests: String(result.data.guests) });
@@ -144,12 +146,9 @@ export default function HotelExperience({ config: sourceConfig }: { config: Hote
             <div className="mt-6 rounded-3xl bg-stone-50 p-6 dark:bg-slate-900 sm:p-8">
               <h2 className="text-2xl font-semibold dark:text-white">{t("hotel.labels.availabilityTitle", config.labels.availabilityTitle)}</h2>
               <form onSubmit={submitEnquiry} className="mt-6 grid gap-4 sm:grid-cols-2">
-                <label className="text-sm font-medium dark:text-slate-200">{t("hotel.labels.checkInLabel", config.labels.checkInLabel)}<input required name="check-in" type="date" className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-white" /></label>
-                <label className="text-sm font-medium dark:text-slate-200">{t("hotel.labels.checkOutLabel", config.labels.checkOutLabel)}<input required name="check-out" type="date" className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-white" /></label>
-                <label className="text-sm font-medium dark:text-slate-200">{t("hotel.labels.guestsLabel", config.labels.guestsLabel)}<input required name="guests" type="number" min="1" max="6" defaultValue="2" className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-white" /></label>
-                <label className="text-sm font-medium dark:text-slate-200">{t("hotel.labels.roomLabel", config.labels.roomLabel)}<select required name="room" defaultValue="" className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-white"><option value="" disabled>{t("hotel.labels.roomPlaceholder", config.labels.roomPlaceholder)}</option>{config.rooms.map((room) => <option key={room.id} value={room.id}>{t("hotel.room." + room.id, room.name)}</option>)}</select></label>
-                <label className="text-sm font-medium dark:text-slate-200">{t("hotel.labels.enquiryNameLabel", config.labels.enquiryNameLabel)}<input required name="name" type="text" className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-white" /></label>
-                <label className="text-sm font-medium dark:text-slate-200">{t("hotel.labels.enquiryPhoneLabel", config.labels.enquiryPhoneLabel)}<input required name="phone" type="tel" className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-white" /></label>
+                {[[t("hotel.labels.checkInLabel", config.labels.checkInLabel), "check-in", "date", "checkIn"], [t("hotel.labels.checkOutLabel", config.labels.checkOutLabel), "check-out", "date", "checkOut"], [t("hotel.labels.guestsLabel", config.labels.guestsLabel), "guests", "number", "guests"], [t("hotel.labels.enquiryNameLabel", config.labels.enquiryNameLabel), "name", "text", "name"], [t("hotel.labels.enquiryPhoneLabel", config.labels.enquiryPhoneLabel), "phone", "tel", "phone"]].map(([label, name, type, field]) => <label key={name} className="text-sm font-medium dark:text-slate-200">{label}<input required name={name} type={type} {...(name === "guests" ? { min: 1, max: 6, defaultValue: 2 } : {})} aria-invalid={Boolean(fieldErrors[field])} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 aria-[invalid=true]:border-red-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white" />{fieldErrors[field]?.[0] ? <span className="mt-1 block text-xs text-red-600">{fieldErrors[field]?.[0]}</span> : null}</label>)}
+                <label className="text-sm font-medium dark:text-slate-200">{t("hotel.labels.roomLabel", config.labels.roomLabel)}<select required name="room" defaultValue="" aria-invalid={Boolean(fieldErrors.room)} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 aria-[invalid=true]:border-red-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white"><option value="" disabled>{t("hotel.labels.roomPlaceholder", config.labels.roomPlaceholder)}</option>{config.rooms.map((room) => <option key={room.id} value={room.id}>{t("hotel.room." + room.id, room.name)}</option>)}</select>{fieldErrors.room?.[0] ? <span className="mt-1 block text-xs text-red-600">{fieldErrors.room[0]}</span> : null}</label>
+                <input name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
                 {error ? <p role="alert" className="sm:col-span-2 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p> : null}
                 <button disabled={isSubmitting} type="submit" className="ui-button sm:col-span-2 inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 font-semibold text-white disabled:cursor-wait disabled:opacity-60" style={{ backgroundColor: config.theme.primary }}>{isSubmitting ? <><span aria-hidden="true" className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />Submitting…</> : t("hotel.labels.enquirySubmitLabel", config.labels.enquirySubmitLabel)}</button>
               </form>

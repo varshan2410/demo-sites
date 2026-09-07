@@ -99,6 +99,16 @@ html.dark body {
   background: #020617;
 }
 
+/* A short entrance transition keeps route changes calm without delaying navigation. */
+.page-transition {
+  animation: page-enter 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* Tamil glyphs need more visual space than Latin characters. On narrow screens,
    reduce display type slightly so translated headings stay balanced and avoid wrapping. */
 @media (max-width: 639px) {

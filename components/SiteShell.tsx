@@ -3,6 +3,7 @@ import type { SiteShellConfig } from "@/types/site";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { LanguageProvider } from "@/components/LanguageProvider";
+import RouteTransition from "@/components/RouteTransition";
 
 export default function SiteShell({
   config,
@@ -22,7 +23,7 @@ export default function SiteShell({
       <LanguageProvider>
         <a className="skip-link" href="#main-content">Skip to main content</a>
         <SiteHeader config={config} />
-        {children}
+        <RouteTransition>{children}</RouteTransition>
         <SiteFooter config={config} />
       </LanguageProvider>
     </div>

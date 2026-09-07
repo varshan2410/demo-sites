@@ -156,6 +156,7 @@ export interface HotelLabels extends ShellLabels {
   roomsEyebrow: string;
   roomsTitle: string;
   roomsRateSuffix: string;
+  roomDetailsLabel: string;
   availabilityTitle: string;
   checkInLabel: string;
   checkOutLabel: string;

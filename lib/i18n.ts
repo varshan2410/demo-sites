@@ -87,3 +87,11 @@ Object.assign(translations.ta, {
   "hotel.labels.transferDescription": "தனியார் விமானநிலைய மற்றும் ரயில் நிலைய மாற்றங்களை எங்கள் முன்பதிவு குழு ஏற்பாடு செய்யும். உங்கள் வருகை நேரத்தை WhatsApp-இல் பகிருங்கள்; பயணத்திற்கு முன் வழி மற்றும் விலையை உறுதிப்படுத்துவோம்.",
   "hotel.labels.directionsLabel": "வழிமுறைகளைப் பெறுங்கள்",
 });
+
+Object.assign(translations.si, {
+  "hotel.labels.roomDetailsLabel": "කාමර විස්තර බලන්න",
+});
+
+Object.assign(translations.ta, {
+  "hotel.labels.roomDetailsLabel": "அறை விவரங்களைப் பார்க்கவும்",
+});

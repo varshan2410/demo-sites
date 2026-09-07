@@ -65,6 +65,7 @@ export const hotelConfig = {
     roomsEyebrow: "Stay your way",
     roomsTitle: "Rooms made for slow mornings",
     roomsRateSuffix: "per night",
+    roomDetailsLabel: "View room details",
     availabilityTitle: "Plan your stay",
     checkInLabel: "Check-in",
     checkOutLabel: "Check-out",

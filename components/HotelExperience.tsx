@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { HotelConfig } from "@/types/site";
@@ -104,6 +105,7 @@ export default function HotelExperience({ config: sourceConfig }: { config: Hote
                   {room.amenities.map((amenity) => <li key={amenity}>✓ {amenity}</li>)}
                 </ul>
                 <p className="mt-6 text-xl font-semibold dark:text-white">{formatPrice(room.rateLKR)} <span className="text-sm font-normal text-slate-500">{t("hotel.labels.roomsRateSuffix", config.labels.roomsRateSuffix)}</span></p>
+                <Link href={`/hotel/rooms/${room.id}`} className="ui-button mt-5 inline-flex rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-slate-700 dark:border-slate-700 dark:text-slate-100">{t("hotel.labels.roomDetailsLabel", config.labels.roomDetailsLabel)} →</Link>
               </article>
             ))}
           </div>

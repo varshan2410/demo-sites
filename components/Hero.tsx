@@ -18,7 +18,7 @@ export default function Hero({ config }: { config: ClinicConfig }) {
             {t("clinic.hero.title", config.hero.title)}
           </h1>
           <p className="mt-6 max-w-lg text-base leading-7 text-slate-200 md:text-lg">{t("clinic.hero.subtitle", config.hero.subtitle)}</p>
-          <a href="#booking" className="mt-8 inline-flex rounded-full bg-white px-6 py-3 font-semibold text-slate-950 shadow-sm transition hover:-translate-y-0.5 hover:bg-teal-50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-950">
+          <a href="#booking" className="ui-button mt-8 inline-flex rounded-full bg-white px-6 py-3 font-semibold text-slate-950 shadow-sm hover:bg-teal-50">
             {t("clinic.hero.cta", config.hero.cta)}
           </a>
         </div>

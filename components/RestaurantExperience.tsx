@@ -10,6 +10,8 @@ export default function RestaurantExperience({ config }: { config: RestaurantCon
   const [category, setCategory] = useState("ALL");
   const [cart, setCart] = useState<Record<string, number>>({});
   const [reservation, setReservation] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
   const categories = ["ALL", ...Array.from(new Set(config.menu.map((item) => item.category)))];
   const visibleMenu = category === "ALL" ? config.menu : config.menu.filter((item) => item.category === category);
   const cartItems = useMemo(() => config.menu.filter((item) => cart[item.id]), [cart, config.menu]);
@@ -22,9 +24,18 @@ export default function RestaurantExperience({ config }: { config: RestaurantCon
     });
   }
 
-  function submitReservation(event: React.FormEvent<HTMLFormElement>) {
+  async function submitReservation(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setReservation(config.reservationReferencePrefix + "-" + Math.floor(100000 + Math.random() * 900000));
+    const data = new FormData(event.currentTarget);
+    setIsSubmitting(true); setError("");
+    try {
+      const response = await fetch("/api/restaurant/reservations", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.fromEntries(data)) });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error ?? "Please check your details and try again.");
+      await new Promise((resolve) => setTimeout(resolve, 280));
+      setReservation(result.reference);
+    } catch (submitError) { setError(submitError instanceof Error ? submitError.message : "Unable to submit reservation."); }
+    finally { setIsSubmitting(false); }
   }
 
   const orderMessage = cartItems.length
@@ -76,7 +87,7 @@ export default function RestaurantExperience({ config }: { config: RestaurantCon
         <div className="mx-auto max-w-6xl"><p className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: config.theme.primary }}>{config.labels.cateringEyebrow}</p><h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-tight dark:text-white md:text-4xl">{config.labels.cateringTitle}</h2><div className="mt-10 grid gap-5 md:grid-cols-2">{config.catering.map((item) => <article key={item.name} className="rounded-3xl bg-white p-7 dark:bg-slate-950"><h3 className="text-xl font-semibold dark:text-white">{item.name}</h3><p className="mt-3 leading-7 text-slate-600 dark:text-slate-300">{item.description}</p><p className="mt-6 text-lg font-semibold dark:text-white">LKR {item.pricePerHeadLKR.toLocaleString()} <span className="text-sm font-normal text-slate-500">{config.labels.perHeadLabel}</span></p><p className="mt-1 text-sm text-slate-500">{item.minimumGuests} {config.labels.minimumGuestsLabel}</p></article>)}</div></div>
       </section>
 
-      <section id="reserve" className="px-6 py-16 md:py-24"><div className="mx-auto max-w-xl rounded-3xl bg-stone-100 p-6 dark:bg-slate-900 sm:p-8">{reservation ? <div id="restaurant-reservation" className="text-center"><h2 className="text-2xl font-semibold dark:text-white">{config.labels.reservationConfirmationTitle}</h2><p className="mt-3 text-slate-600 dark:text-slate-300">{config.labels.reservationConfirmationReference.replace("{reference}", reservation)}</p></div> : <><h2 className="text-2xl font-semibold dark:text-white">{config.labels.reservationTitle}</h2><form onSubmit={submitReservation} className="mt-6 grid gap-4 sm:grid-cols-2">{[[config.labels.reservationNameLabel,"name","text"],[config.labels.reservationPhoneLabel,"phone","tel"],[config.labels.reservationDateLabel,"date","date"],[config.labels.reservationTimeLabel,"time","time"]].map(([label,name,type]) => <label key={name} className="text-sm font-medium dark:text-slate-200">{label}<input required name={name} type={type} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-white" /></label>)}<label className="text-sm font-medium dark:text-slate-200">{config.labels.reservationPartyLabel}<input required name="party" type="number" min="1" defaultValue="2" className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-white" /></label><button type="submit" className="self-end rounded-full px-5 py-3 font-semibold text-white" style={{ backgroundColor: config.theme.primary }}>{config.labels.reservationSubmitLabel}</button></form></>}</div></section>
+      <section id="reserve" className="px-6 py-16 md:py-24"><div className="mx-auto max-w-xl rounded-3xl bg-stone-100 p-6 dark:bg-slate-900 sm:p-8">{reservation ? <div id="restaurant-reservation" className="text-center"><h2 className="text-2xl font-semibold dark:text-white">{config.labels.reservationConfirmationTitle}</h2><p className="mt-3 text-slate-600 dark:text-slate-300">{config.labels.reservationConfirmationReference.replace("{reference}", reservation)}</p></div> : <><h2 className="text-2xl font-semibold dark:text-white">{config.labels.reservationTitle}</h2><form onSubmit={submitReservation} className="mt-6 grid gap-4 sm:grid-cols-2">{[[config.labels.reservationNameLabel,"name","text"],[config.labels.reservationPhoneLabel,"phone","tel"],[config.labels.reservationDateLabel,"date","date"],[config.labels.reservationTimeLabel,"time","time"]].map(([label,name,type]) => <label key={name} className="text-sm font-medium dark:text-slate-200">{label}<input required name={name} type={type} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-white" /></label>)}<label className="text-sm font-medium dark:text-slate-200">{config.labels.reservationPartyLabel}<input required name="party" type="number" min="1" defaultValue="2" className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-white" /></label>{error ? <p role="alert" className="sm:col-span-2 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p> : null}<button disabled={isSubmitting} type="submit" className="ui-button self-end rounded-full px-5 py-3 font-semibold text-white disabled:cursor-wait disabled:opacity-60" style={{ backgroundColor: config.theme.primary }}>{isSubmitting ? <><span aria-hidden="true" className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white align-[-2px]" />Submitting…</> : config.labels.reservationSubmitLabel}</button></form></>}</div></section>
     </>
   );
 }

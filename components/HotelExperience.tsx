@@ -12,6 +12,8 @@ export default function HotelExperience({ config }: { config: HotelConfig }) {
   const [currency, setCurrency] = useState<Currency>("LKR");
   const [reference, setReference] = useState("");
   const [enquiry, setEnquiry] = useState<Record<string, string> | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   function formatPrice(value: number) {
     const converted = value * config.exchangeRates[currency];
@@ -22,18 +24,20 @@ export default function HotelExperience({ config }: { config: HotelConfig }) {
     }).format(converted);
   }
 
-  function submitEnquiry(event: React.FormEvent<HTMLFormElement>) {
+  async function submitEnquiry(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const room = config.rooms.find((item) => item.id === data.get("room"));
-    setReference(config.bookingReferencePrefix + "-" + Math.floor(100000 + Math.random() * 900000));
-    setEnquiry({
-      name: String(data.get("name")),
-      room: room?.name ?? "",
-      checkIn: String(data.get("check-in")),
-      checkOut: String(data.get("check-out")),
-      guests: String(data.get("guests")),
-    });
+    setIsSubmitting(true); setError("");
+    try {
+      const response = await fetch("/api/hotel/enquiries", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: data.get("name"), phone: data.get("phone"), room: data.get("room"), checkIn: data.get("check-in"), checkOut: data.get("check-out"), guests: data.get("guests") }) });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error ?? "Please check your details and try again.");
+      await new Promise((resolve) => setTimeout(resolve, 280));
+      setReference(result.reference);
+      setEnquiry({ name: result.data.name, room: room?.name ?? result.data.room, checkIn: result.data.checkIn, checkOut: result.data.checkOut, guests: String(result.data.guests) });
+    } catch (submitError) { setError(submitError instanceof Error ? submitError.message : "Unable to submit enquiry."); }
+    finally { setIsSubmitting(false); }
   }
 
   const whatsappMessage = enquiry
@@ -50,7 +54,7 @@ export default function HotelExperience({ config }: { config: HotelConfig }) {
             <p className="text-xs font-bold uppercase tracking-[0.24em] text-amber-100">{config.tagline}</p>
             <h1 className="mt-5 text-5xl font-semibold leading-[1.02] tracking-tight md:text-7xl">{t("hotel.hero.title", config.hero.title)}</h1>
             <p className="mt-6 max-w-lg text-lg leading-8 text-stone-200">{t("hotel.hero.subtitle", config.hero.subtitle)}</p>
-            <a href="#availability" className="mt-8 inline-flex rounded-full bg-white px-6 py-3 font-semibold text-stone-950 transition hover:bg-amber-50">
+            <a href="#availability" className="ui-button mt-8 inline-flex rounded-full bg-white px-6 py-3 font-semibold text-stone-950 hover:bg-amber-50">
               {t("hotel.hero.cta", config.hero.cta)}
             </a>
           </div>
@@ -117,8 +121,8 @@ export default function HotelExperience({ config }: { config: HotelConfig }) {
               <p className="mt-6 text-lg font-semibold dark:text-white">{enquiry.room}</p>
               <p className="mt-2 text-slate-600 dark:text-slate-300">{enquiry.checkIn} → {enquiry.checkOut} · {enquiry.guests} guest(s)</p>
               <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-                <a href={"https://wa.me/" + config.whatsapp.number + "?text=" + encodeURIComponent(whatsappMessage)} target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-3 text-sm font-semibold text-white" style={{ backgroundColor: config.theme.primary }}>{t("hotel.labels.confirmationWhatsAppLabel", config.labels.confirmationWhatsAppLabel)}</a>
-                <button type="button" onClick={() => window.print()} className="rounded-full border border-slate-300 px-5 py-3 text-sm font-semibold dark:border-slate-700 dark:text-slate-200">{t("hotel.labels.printVoucherLabel", config.labels.printVoucherLabel)}</button>
+                <a href={"https://wa.me/" + config.whatsapp.number + "?text=" + encodeURIComponent(whatsappMessage)} target="_blank" rel="noopener noreferrer" className="ui-button rounded-full px-5 py-3 text-sm font-semibold text-white" style={{ backgroundColor: config.theme.primary }}>{t("hotel.labels.confirmationWhatsAppLabel", config.labels.confirmationWhatsAppLabel)}</a>
+                <button type="button" onClick={() => window.print()} className="ui-button rounded-full border border-slate-300 px-5 py-3 text-sm font-semibold dark:border-slate-700 dark:text-slate-200">{t("hotel.labels.printVoucherLabel", config.labels.printVoucherLabel)}</button>
               </div>
             </div>
           ) : (
@@ -131,7 +135,8 @@ export default function HotelExperience({ config }: { config: HotelConfig }) {
                 <label className="text-sm font-medium dark:text-slate-200">{t("hotel.labels.roomLabel", config.labels.roomLabel)}<select required name="room" defaultValue="" className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-white"><option value="" disabled>{t("hotel.labels.roomPlaceholder", config.labels.roomPlaceholder)}</option>{config.rooms.map((room) => <option key={room.id} value={room.id}>{t("hotel.room." + room.id, room.name)}</option>)}</select></label>
                 <label className="text-sm font-medium dark:text-slate-200">{t("hotel.labels.enquiryNameLabel", config.labels.enquiryNameLabel)}<input required name="name" type="text" className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-white" /></label>
                 <label className="text-sm font-medium dark:text-slate-200">{config.labels.enquiryPhoneLabel}<input required name="phone" type="tel" className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-white" /></label>
-                <button type="submit" className="sm:col-span-2 rounded-full px-5 py-3 font-semibold text-white" style={{ backgroundColor: config.theme.primary }}>{t("hotel.labels.enquirySubmitLabel", config.labels.enquirySubmitLabel)}</button>
+                {error ? <p role="alert" className="sm:col-span-2 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p> : null}
+                <button disabled={isSubmitting} type="submit" className="ui-button sm:col-span-2 inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 font-semibold text-white disabled:cursor-wait disabled:opacity-60" style={{ backgroundColor: config.theme.primary }}>{isSubmitting ? <><span aria-hidden="true" className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />Submitting…</> : t("hotel.labels.enquirySubmitLabel", config.labels.enquirySubmitLabel)}</button>
               </form>
             </div>
           )}

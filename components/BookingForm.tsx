@@ -10,20 +10,23 @@ export default function BookingForm({ config }: { config: ClinicConfig }) {
   const { t } = useLanguage();
   const [reference, setReference] = useState("");
   const [booking, setBooking] = useState<BookingDetails | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const nextReference = config.bookingReferencePrefix + "-" + Math.floor(100000 + Math.random() * 900000);
-
-    setBooking({
-      name: String(formData.get("name")),
-      service: config.services.find((service) => service.id === formData.get("service"))?.name ?? "",
-      doctor: String(formData.get("doctor")),
-      date: String(formData.get("date")),
-      time: String(formData.get("time")),
-    });
-    setReference(nextReference);
+    setIsSubmitting(true);
+    setError("");
+    try {
+      const response = await fetch("/api/clinic/appointments", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.fromEntries(formData)) });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error ?? "Please check your details and try again.");
+      await new Promise((resolve) => setTimeout(resolve, 280));
+      setBooking({ name: result.data.name, service: config.services.find((service) => service.id === result.data.service)?.name ?? result.data.service, doctor: result.data.doctor, date: result.data.date, time: result.data.time });
+      setReference(result.reference);
+    } catch (submitError) { setError(submitError instanceof Error ? submitError.message : "Unable to submit request."); }
+    finally { setIsSubmitting(false); }
   }
 
   function formatWhatsAppMessage() {
@@ -56,10 +59,10 @@ export default function BookingForm({ config }: { config: ClinicConfig }) {
             </dl>
           </div>
           <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-            <a href={"https://wa.me/" + config.whatsapp.number + "?text=" + encodeURIComponent(formatWhatsAppMessage())} target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-3 text-sm font-semibold text-white" style={{ backgroundColor: config.theme.primary }}>
+            <a href={"https://wa.me/" + config.whatsapp.number + "?text=" + encodeURIComponent(formatWhatsAppMessage())} target="_blank" rel="noopener noreferrer" className="ui-button rounded-full px-5 py-3 text-sm font-semibold text-white" style={{ backgroundColor: config.theme.primary }}>
               {config.labels.confirmationWhatsAppLabel}
             </a>
-            <button type="button" onClick={() => window.print()} className="rounded-full border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 dark:border-slate-700 dark:text-slate-200">
+            <button type="button" onClick={() => window.print()} className="ui-button rounded-full border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 dark:border-slate-700 dark:text-slate-200">
               {config.labels.printConfirmationLabel}
             </button>
           </div>
@@ -103,8 +106,9 @@ export default function BookingForm({ config }: { config: ClinicConfig }) {
             {t("clinic.labels.timeLabel", config.labels.timeLabel)}
             <input required name="time" type="time" className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
           </label>
-          <button type="submit" className="w-full rounded-lg py-3 font-medium text-white" style={{ backgroundColor: config.theme.primary }}>
-            {t("clinic.labels.submitLabel", config.labels.submitLabel)}
+          {error ? <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p> : null}
+          <button disabled={isSubmitting} type="submit" className="ui-button inline-flex w-full items-center justify-center gap-2 rounded-lg py-3 font-medium text-white disabled:cursor-wait disabled:opacity-60" style={{ backgroundColor: config.theme.primary }}>
+            {isSubmitting ? <><span aria-hidden="true" className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />Submitting…</> : t("clinic.labels.submitLabel", config.labels.submitLabel)}
           </button>
         </form>
       </div>

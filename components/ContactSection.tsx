@@ -23,7 +23,7 @@ export default function ContactSection({ config }: { config: ClinicConfig }) {
               <dd className="mt-1 leading-7 text-slate-600 dark:text-slate-300">{config.contact.hours}</dd>
             </div>
           </dl>
-          <a href={"https://wa.me/" + config.whatsapp.number + "?text=" + encodeURIComponent(config.whatsapp.defaultMessage)} target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex rounded-full px-5 py-3 text-sm font-semibold text-white transition hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-offset-2" style={{ backgroundColor: config.theme.primary }}>
+          <a href={"https://wa.me/" + config.whatsapp.number + "?text=" + encodeURIComponent(config.whatsapp.defaultMessage)} target="_blank" rel="noopener noreferrer" className="ui-button mt-8 inline-flex rounded-full px-5 py-3 text-sm font-semibold text-white" style={{ backgroundColor: config.theme.primary }}>
             {t("clinic.labels.contactWhatsAppLabel", config.labels.contactWhatsAppLabel)}
           </a>
         </div>

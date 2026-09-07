@@ -7,6 +7,41 @@ body {
   background: #ffffff;
 }
 
+/* Consistent, restrained interaction feedback for every action control. */
+.ui-button {
+  transition: transform 180ms ease, filter 180ms ease, background-color 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+}
+
+.ui-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(0.97);
+}
+
+.ui-button:active:not(:disabled) {
+  transform: translateY(0);
+  filter: brightness(0.94);
+}
+
+.ui-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+/* Covers compact controls whose styles are supplied by the individual demo. */
+button {
+  transition: transform 180ms ease, filter 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(0.97);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+  filter: brightness(0.94);
+}
+
 html {
   scroll-behavior: smooth;
 }

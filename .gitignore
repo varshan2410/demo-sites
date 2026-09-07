@@ -1,0 +1,16 @@
+# Dependencies and Next.js output
+node_modules/
+.next/
+
+# Local configuration and logs
+.env
+.env.*
+!.env.example
+*.log
+
+# Deployment and editor files
+.vercel/
+.DS_Store
+
+# Failed local dependency installs are never source files
+node_modules_failed_*/

@@ -136,7 +136,8 @@ main:focus {
 #appointment-receipt,
 #hotel-voucher-receipt,
 #restaurant-menu-print,
-#restaurant-reservation-receipt { display: none; }
+#restaurant-reservation-receipt,
+#catering-quote-receipt { display: none; }
 
 @media print {
   @page { size: A4; margin: 14mm; }
@@ -144,35 +145,40 @@ main:focus {
   body:has(#appointment-receipt) > *,
   body:has(#hotel-voucher-receipt) > *,
   body:has(#restaurant-menu-print) > *,
-  body:has(#restaurant-reservation-receipt) > * { display: none !important; }
+  body:has(#restaurant-reservation-receipt) > *,
+  body:has(#catering-quote-receipt) > * { display: none !important; }
   body:has(#appointment-receipt) > #appointment-receipt,
   body:has(#hotel-voucher-receipt) > #hotel-voucher-receipt,
   body:has(#restaurant-menu-print) > #restaurant-menu-print,
-  body:has(#restaurant-reservation-receipt) > #restaurant-reservation-receipt { display: block !important; }
+  body:has(#restaurant-reservation-receipt) > #restaurant-reservation-receipt,
+  body:has(#catering-quote-receipt) > #catering-quote-receipt { display: block !important; }
   body:has(#restaurant-reservation-receipt) > #restaurant-menu-print { display: none !important; }
+  body:has(#catering-quote-receipt) > #restaurant-menu-print { display: none !important; }
+  body:has(#catering-quote-receipt) > #restaurant-reservation-receipt { display: none !important; }
 
   #appointment-receipt,
   #hotel-voucher-receipt,
   #restaurant-reservation-receipt,
+  #catering-quote-receipt,
   #restaurant-menu-print {
     color: #0f172a;
     font-family: Arial, sans-serif;
   }
 
   #appointment-receipt .receipt-card { border: 1px solid #cbd5e1; border-radius: 12px; overflow: hidden; }
-  #hotel-voucher-receipt .receipt-card, #restaurant-reservation-receipt .receipt-card { border: 1px solid #cbd5e1; border-radius: 12px; overflow: hidden; }
+  #hotel-voucher-receipt .receipt-card, #restaurant-reservation-receipt .receipt-card, #catering-quote-receipt .receipt-card { border: 1px solid #cbd5e1; border-radius: 12px; overflow: hidden; }
   #appointment-receipt .receipt-header { padding: 24px; color: white; }
-  #hotel-voucher-receipt .receipt-header, #restaurant-reservation-receipt .receipt-header { padding: 24px; color: white; }
+  #hotel-voucher-receipt .receipt-header, #restaurant-reservation-receipt .receipt-header, #catering-quote-receipt .receipt-header { padding: 24px; color: white; }
   #appointment-receipt .receipt-body { padding: 24px; }
-  #hotel-voucher-receipt .receipt-body, #restaurant-reservation-receipt .receipt-body { padding: 24px; }
+  #hotel-voucher-receipt .receipt-body, #restaurant-reservation-receipt .receipt-body, #catering-quote-receipt .receipt-body { padding: 24px; }
   #appointment-receipt .receipt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 28px; }
-  #hotel-voucher-receipt .receipt-grid, #restaurant-reservation-receipt .receipt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 28px; }
+  #hotel-voucher-receipt .receipt-grid, #restaurant-reservation-receipt .receipt-grid, #catering-quote-receipt .receipt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 28px; }
   #appointment-receipt .receipt-label { margin: 0 0 4px; color: #64748b; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-  #hotel-voucher-receipt .receipt-label, #restaurant-reservation-receipt .receipt-label { margin: 0 0 4px; color: #64748b; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  #hotel-voucher-receipt .receipt-label, #restaurant-reservation-receipt .receipt-label, #catering-quote-receipt .receipt-label { margin: 0 0 4px; color: #64748b; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
   #appointment-receipt .receipt-value { margin: 0; font-size: 14px; font-weight: 600; }
-  #hotel-voucher-receipt .receipt-value, #restaurant-reservation-receipt .receipt-value { margin: 0; font-size: 14px; font-weight: 600; }
+  #hotel-voucher-receipt .receipt-value, #restaurant-reservation-receipt .receipt-value, #catering-quote-receipt .receipt-value { margin: 0; font-size: 14px; font-weight: 600; }
   #appointment-receipt .receipt-footer { margin-top: 24px; border-top: 1px solid #e2e8f0; padding-top: 16px; color: #475569; font-size: 12px; line-height: 1.5; }
-  #hotel-voucher-receipt .receipt-footer, #restaurant-reservation-receipt .receipt-footer { margin-top: 24px; border-top: 1px solid #e2e8f0; padding-top: 16px; color: #475569; font-size: 12px; line-height: 1.5; }
+  #hotel-voucher-receipt .receipt-footer, #restaurant-reservation-receipt .receipt-footer, #catering-quote-receipt .receipt-footer { margin-top: 24px; border-top: 1px solid #e2e8f0; padding-top: 16px; color: #475569; font-size: 12px; line-height: 1.5; }
   #restaurant-menu-print .menu-print-card { border: 1px solid #cbd5e1; border-radius: 12px; padding: 24px; }
   #restaurant-menu-print header { display: flex; gap: 14px; align-items: center; padding-bottom: 16px; }
   #restaurant-menu-print header img { width: 42px; height: 42px; object-fit: contain; }

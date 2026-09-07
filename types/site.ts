@@ -234,6 +234,12 @@ export interface RestaurantLabels extends ShellLabels {
   cateringTitle: string;
   perHeadLabel: string;
   minimumGuestsLabel: string;
+  quoteTitle: string;
+  quotePackageLabel: string;
+  quoteGuestsLabel: string;
+  quoteEstimatedTotalLabel: string;
+  quotePrintLabel: string;
+  quoteWhatsAppLabel: string;
   reservationTitle: string;
   reservationNameLabel: string;
   reservationPhoneLabel: string;

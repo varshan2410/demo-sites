@@ -109,3 +109,11 @@ Object.assign(translations.ta, {
   "restaurant.special.hopper-evening.name": "அப்பம் மாலை", "restaurant.special.hopper-evening.description": "முட்டை அப்பம், பருப்பு, சீனி சம்பல் மற்றும் புதிய எலுமிச்சை சோடா.",
   "restaurant.deliveryRadius": "கொழும்பு 03, 04, 05, 06, 07 மற்றும் 08 முழுவதும் விநியோகம். பெரும் கொழும்பில் எங்கும் உணவளிப்பை முன்கூட்டியே ஆர்டர் செய்யலாம்.",
 });
+
+Object.assign(translations.si, {
+  "restaurant.labels.quoteTitle": "ආහාර සැපයීමේ මිල කැඳවීමක් සකසන්න", "restaurant.labels.quotePackageLabel": "පැකේජය", "restaurant.labels.quoteGuestsLabel": "අමුත්තන්", "restaurant.labels.quoteEstimatedTotalLabel": "ඇස්තමේන්තුගත එකතුව", "restaurant.labels.quotePrintLabel": "මිල කැඳවීම මුද්‍රණය කරන්න", "restaurant.labels.quoteWhatsAppLabel": "WhatsApp හරහා යවන්න",
+});
+
+Object.assign(translations.ta, {
+  "restaurant.labels.quoteTitle": "உணவளிப்பு மேற்கோளை உருவாக்குங்கள்", "restaurant.labels.quotePackageLabel": "தொகுப்பு", "restaurant.labels.quoteGuestsLabel": "விருந்தினர்கள்", "restaurant.labels.quoteEstimatedTotalLabel": "மதிப்பிடப்பட்ட மொத்தம்", "restaurant.labels.quotePrintLabel": "மேற்கோளை அச்சிடு", "restaurant.labels.quoteWhatsAppLabel": "WhatsApp மூலம் அனுப்பு",
+});

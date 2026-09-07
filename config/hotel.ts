@@ -21,12 +21,20 @@ export const hotelConfig = {
     { label: "Home", href: "#home" },
     { label: "Rooms & rates", href: "#rooms" },
     { label: "Experiences", href: "#experiences" },
+    { label: "Gallery", href: "#gallery" },
     { label: "Enquire", href: "#availability" },
+    { label: "Contact", href: "#contact" },
   ],
   rooms: [
     { id: "ocean-suite", name: "Ocean Suite", description: "A generous king suite with a private terrace and uninterrupted sea views.", guests: "2 guests", rateLKR: 68000, amenities: ["King bed", "Ocean terrace", "Breakfast included"], image: "/images/hotel/suite.webp" },
     { id: "garden-suite", name: "Garden Suite", description: "Quiet tropical views, a reading corner, and an indoor-outdoor rain shower.", guests: "2 guests", rateLKR: 52000, amenities: ["King bed", "Garden view", "Rain shower"], image: "/images/hotel/suite.webp" },
     { id: "family-pavilion", name: "Family Pavilion", description: "Two connecting bedrooms for unhurried family stays by the coast.", guests: "4 guests", rateLKR: 96000, amenities: ["2 bedrooms", "Private lounge", "Breakfast included"], image: "/images/hotel/suite.webp" },
+  ],
+  gallery: [
+    { src: "/images/hotel/hero.webp", alt: "Ocean-facing terrace at Kahanda Cove" },
+    { src: "/images/hotel/gallery/pool-sunset.png", alt: "Kahanda Cove pool at sunset" },
+    { src: "/images/hotel/gallery/garden-bedroom.png", alt: "Garden bedroom at Kahanda Cove" },
+    { src: "/images/hotel/suite.webp", alt: "Ocean suite interior at Kahanda Cove" },
   ],
   attractions: [
     { name: "Galle Fort", distance: "24 km · 40 min", description: "Wander colonial lanes, galleries, cafés and the sunset-facing ramparts." },
@@ -74,6 +82,11 @@ export const hotelConfig = {
     printVoucherLabel: "Print stay voucher",
     currencyLabel: "Display currency",
     indicativeRateLabel: "Indicative conversion. Your final rate is confirmed in LKR.",
+    galleryEyebrow: "A closer look",
+    galleryTitle: "Made for unhurried days by the coast",
+    contactEyebrow: "Find your way here",
+    contactTitle: "A private corner of the southern coast",
+    mapTitle: "Map showing the Kahanda Cove area in Talpe, Galle",
   },
   bookingReferencePrefix: "KCV",
 } satisfies HotelConfig;

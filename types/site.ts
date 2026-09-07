@@ -171,6 +171,11 @@ export interface HotelLabels extends ShellLabels {
   printVoucherLabel: string;
   currencyLabel: string;
   indicativeRateLabel: string;
+  galleryEyebrow: string;
+  galleryTitle: string;
+  contactEyebrow: string;
+  contactTitle: string;
+  mapTitle: string;
 }
 
 export interface HotelConfig extends SiteShellConfig {
@@ -178,6 +183,7 @@ export interface HotelConfig extends SiteShellConfig {
   tagline: string;
   hero: HeroConfig;
   rooms: HotelRoom[];
+  gallery: GalleryImage[];
   attractions: Attraction[];
   exchangeRates: Record<"LKR" | "USD" | "EUR" | "GBP", number>;
   whatsapp: WhatsAppConfig;
@@ -192,6 +198,7 @@ export interface MenuItem {
   priceLKR: number;
   category: string;
   tags: string[];
+  image: string;
 }
 
 export interface CateringPackage {
@@ -222,6 +229,17 @@ export interface RestaurantLabels extends ShellLabels {
   reservationSubmitLabel: string;
   reservationConfirmationTitle: string;
   reservationConfirmationReference: string;
+  galleryEyebrow: string;
+  galleryTitle: string;
+  socialEyebrow: string;
+  socialTitle: string;
+  socialDescription: string;
+  socialCtaLabel: string;
+  contactEyebrow: string;
+  contactTitle: string;
+  mapTitle: string;
+  printMenuLabel: string;
+  printReservationLabel: string;
 }
 
 export interface RestaurantConfig extends SiteShellConfig {
@@ -229,6 +247,8 @@ export interface RestaurantConfig extends SiteShellConfig {
   tagline: string;
   hero: HeroConfig;
   menu: MenuItem[];
+  gallery: GalleryImage[];
+  instagramUrl: string;
   catering: CateringPackage[];
   whatsapp: WhatsAppConfig;
   labels: RestaurantLabels;

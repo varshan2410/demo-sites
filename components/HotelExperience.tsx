@@ -1,9 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import type { HotelConfig } from "@/types/site";
 import { useLanguage } from "@/components/LanguageProvider";
+import ExperienceGallery from "@/components/ExperienceGallery";
+import BusinessContactSection from "@/components/BusinessContactSection";
 
 type Currency = "LKR" | "USD" | "EUR" | "GBP";
 
@@ -14,6 +17,9 @@ export default function HotelExperience({ config }: { config: HotelConfig }) {
   const [enquiry, setEnquiry] = useState<Record<string, string> | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => setIsMounted(true), []);
 
   function formatPrice(value: number) {
     const converted = value * config.exchangeRates[currency];
@@ -111,6 +117,8 @@ export default function HotelExperience({ config }: { config: HotelConfig }) {
         </div>
       </section>
 
+      <ExperienceGallery id="gallery" eyebrow={config.labels.galleryEyebrow} title={config.labels.galleryTitle} images={config.gallery} accent={config.theme.primary} />
+
       <section id="availability" className="px-6 py-16 md:py-24">
         <div className="mx-auto max-w-2xl">
           <p className="rounded-full px-4 py-2 text-center text-sm font-semibold text-white" style={{ backgroundColor: config.theme.primary }}>{t("hotel.labels.directBookingMessage", config.labels.directBookingMessage)}</p>
@@ -142,6 +150,14 @@ export default function HotelExperience({ config }: { config: HotelConfig }) {
           )}
         </div>
       </section>
+      <BusinessContactSection eyebrow={config.labels.contactEyebrow} title={config.labels.contactTitle} mapTitle={config.labels.mapTitle} contact={config.contact} whatsapp={config.whatsapp} theme={config.theme} actionLabel="Chat on WhatsApp" />
+      {enquiry && isMounted ? createPortal(
+        <article id="hotel-voucher-receipt">
+          <div className="receipt-card">
+            <header className="receipt-header" style={{ backgroundColor: config.theme.primary }}><p style={{ margin: 0, fontSize: 12, fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase" }}>Stay enquiry voucher</p><h1 style={{ margin: "8px 0 0", fontSize: 26 }}>{config.siteName}</h1><p style={{ margin: "6px 0 0", opacity: .86 }}>{config.contact.address}</p></header>
+            <div className="receipt-body"><p style={{ margin: "0 0 20px", fontSize: 15 }}>Enquiry received · Reference <strong>{reference}</strong></p><div className="receipt-grid"><div><p className="receipt-label">Guest</p><p className="receipt-value">{enquiry.name}</p></div><div><p className="receipt-label">Room preference</p><p className="receipt-value">{enquiry.room}</p></div><div><p className="receipt-label">Check-in</p><p className="receipt-value">{enquiry.checkIn}</p></div><div><p className="receipt-label">Check-out</p><p className="receipt-value">{enquiry.checkOut}</p></div><div><p className="receipt-label">Guests</p><p className="receipt-value">{enquiry.guests}</p></div><div><p className="receipt-label">Status</p><p className="receipt-value">Pending availability</p></div></div><footer className="receipt-footer">This is an availability enquiry, not a confirmed stay. Our reservations team will contact you to confirm availability and your final rate in LKR.<br />{config.contact.hours}</footer></div>
+          </div>
+        </article>, document.body) : null}
     </>
   );
 }

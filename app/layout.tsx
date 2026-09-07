@@ -1,9 +1,22 @@
 import "./globals.css";
+import type { Metadata } from "next";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 
-export const metadata = {
-  title: "CYDO Demo Sites",
-  description: "Live demo sites for clinic, hotel, and restaurant clients.",
+export const metadata: Metadata = {
+  title: {
+    default: "CYDO Demo Sites",
+    template: "%s | CYDO Demo Sites",
+  },
+  description: "Config-driven customer website demos for clinic, hotel, and restaurant businesses.",
+  applicationName: "CYDO Demo Sites",
+  keywords: ["clinic website", "hotel website", "restaurant website", "Sri Lanka", "CYDO"],
+  robots: {
+    index: true,
+    follow: true,
+  },
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -94,6 +94,45 @@ html.dark body {
   background: #020617;
 }
 
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  border-radius: 0.5rem;
+  background: var(--color-primary, #0f766e);
+  padding: 0.7rem 1rem;
+  color: white;
+  font-weight: 700;
+  transform: translateY(-160%);
+  transition: transform 180ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 3px solid white;
+  outline-offset: 2px;
+}
+
+main:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 #appointment-receipt,
 #hotel-voucher-receipt,
 #restaurant-menu-print,

@@ -20,6 +20,7 @@ export default function SiteShell({
   return (
     <div style={brandStyles} className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <LanguageProvider>
+        <a className="skip-link" href="#main-content">Skip to main content</a>
         <SiteHeader config={config} />
         {children}
         <SiteFooter config={config} />

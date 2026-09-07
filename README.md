@@ -24,6 +24,12 @@ Open http://localhost:3000.
 
 The production build statically renders every demo route.
 
+## Deployment setting
+
+Set `NEXT_PUBLIC_SITE_URL` to the deployed public URL (for example,
+`https://your-project.vercel.app`). This gives `robots.txt` and `sitemap.xml`
+the correct canonical host.
+
 ## Architecture
 
 Business data, brand tokens, prices, images, navigation and copy live under config/. The shared site shell, theme toggle, navigation, footer and WhatsApp control are reused across all demos. Domain-specific journeys remain purpose-built:

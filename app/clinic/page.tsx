@@ -9,12 +9,17 @@ import DoctorsSection from "@/components/DoctorsSection";
 import ContactSection from "@/components/ContactSection";
 import GallerySection from "@/components/GallerySection";
 
+export const metadata: Metadata = {
+  title: "Sunshine Dental Clinic",
+  description: "A mobile-first dental clinic demo with transparent treatment pricing and appointment requests.",
+};
+
 export default function ClinicPage() {
   const config = getSiteConfig("clinic");
 
   return (
     <SiteShell config={config}>
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <Hero config={config} />
         <TrustSignals config={config} />
         <PriceList config={config} />
@@ -27,3 +32,4 @@ export default function ClinicPage() {
     </SiteShell>
   );
 }
+import type { Metadata } from "next";

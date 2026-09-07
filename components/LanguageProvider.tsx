@@ -13,10 +13,13 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     if (saved === "en" || saved === "si" || saved === "ta") setLanguage(saved);
   }, []);
 
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
+
   function changeLanguage(next: Language) {
     setLanguage(next);
     window.localStorage.setItem("cydo-language", next);
-    document.documentElement.lang = next;
   }
 
   const value = useMemo(() => ({ language, setLanguage: changeLanguage, t: (key: string, fallback: string) => translate(language, key, fallback) }), [language]);

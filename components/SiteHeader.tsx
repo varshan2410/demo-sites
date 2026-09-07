@@ -37,6 +37,7 @@ export default function SiteHeader({ config }: { config: SiteShellConfig }) {
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-700 md:hidden dark:border-slate-700 dark:text-slate-100"
             aria-label={isMenuOpen ? t("common.closeMenu", config.labels.closeMenuLabel) : t("common.openMenu", config.labels.menuLabel)}
             aria-expanded={isMenuOpen}
+            aria-controls="mobile-navigation"
             onClick={() => setIsMenuOpen((current) => !current)}
           >
             <span className="text-xl" aria-hidden="true">{isMenuOpen ? "×" : "☰"}</span>
@@ -44,7 +45,7 @@ export default function SiteHeader({ config }: { config: SiteShellConfig }) {
         </div>
       </div>
       {isMenuOpen ? (
-        <nav className="border-t border-slate-200 px-5 py-3 md:hidden dark:border-slate-800" aria-label="Mobile navigation">
+        <nav id="mobile-navigation" className="border-t border-slate-200 px-5 py-3 md:hidden dark:border-slate-800" aria-label="Mobile navigation">
           {config.navigation.map((item) => (
             <a
               key={item.href}

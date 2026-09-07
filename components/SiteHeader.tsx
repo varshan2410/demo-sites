@@ -13,12 +13,12 @@ export default function SiteHeader({ config }: { config: SiteShellConfig }) {
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/95 backdrop-blur dark:border-slate-800 dark:bg-slate-950/95">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-6">
-        <a href="#home" className="group inline-flex items-center gap-2.5 text-slate-900 dark:text-white" aria-label={`${config.theme.logoText} home`}>
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-3 sm:h-16 sm:px-6">
+        <a href="#home" className="group inline-flex min-w-0 items-center gap-1.5 text-slate-900 dark:text-white sm:gap-2.5" aria-label={`${config.theme.logoText} home`}>
           <Image src={config.theme.logoImage} alt="" width={40} height={40} className="brand-logo" priority />
-          <span className="brand-name">{config.theme.logoText}</span>
+          <span className="brand-name whitespace-nowrap">{config.theme.logoText}</span>
         </a>
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
           <nav className="hidden items-center gap-1 md:flex" aria-label="Primary navigation">
             {config.navigation.map((item) => (
               <a
@@ -34,7 +34,7 @@ export default function SiteHeader({ config }: { config: SiteShellConfig }) {
           <LanguageSwitcher />
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-700 md:hidden dark:border-slate-700 dark:text-slate-100"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-700 md:hidden sm:h-10 sm:w-10 dark:border-slate-700 dark:text-slate-100"
             aria-label={isMenuOpen ? t("common.closeMenu", config.labels.closeMenuLabel) : t("common.openMenu", config.labels.menuLabel)}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-navigation"

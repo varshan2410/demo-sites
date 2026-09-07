@@ -23,9 +23,14 @@ body {
 }
 
 .brand-name {
-  font-size: 0.96rem;
+  font-size: 0.82rem;
   font-weight: 800;
   letter-spacing: -0.025em;
+}
+
+@media (min-width: 640px) {
+  .brand-logo { height: 2rem; width: 2rem; }
+  .brand-name { font-size: 0.96rem; }
 }
 
 /* Consistent, restrained interaction feedback for every action control. */

@@ -41,6 +41,11 @@ export interface WhatsAppConfig {
   ariaLabel: string;
 }
 
+export interface NavigationItem {
+  label: string;
+  href: string;
+}
+
 export interface ClinicLabels {
   servicesTitle: string;
   bookingTitle: string;
@@ -54,6 +59,14 @@ export interface ClinicLabels {
   confirmationTitle: string;
   confirmationReference: string;
   confirmationMessage: string;
+  themeToggleLabel: string;
+  menuLabel: string;
+  closeMenuLabel: string;
+  footerHeading: string;
+  footerDescription: string;
+  addressLabel: string;
+  hoursLabel: string;
+  copyright: string;
 }
 
 export interface ClinicConfig {
@@ -67,6 +80,7 @@ export interface ClinicConfig {
   doctors: Doctor[];
   contact: ContactConfig;
   whatsapp: WhatsAppConfig;
+  navigation: NavigationItem[];
   labels: ClinicLabels;
   bookingReferencePrefix: string;
 }

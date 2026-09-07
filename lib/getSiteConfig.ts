@@ -1,15 +1,13 @@
-import clinic from "@/config/clinic.json";
+import { clinicConfig } from "@/config/clinic";
 
-export type SiteConfig = typeof clinic;
+// Add each future business here. Components receive a typed configuration,
+// so business data never has to be hardcoded inside the UI.
+export const siteConfigs = {
+  clinic: clinicConfig,
+} as const;
 
-const sites: Record<string, SiteConfig> = {
-  clinic,
-  // hotel: require("@/config/hotel.json"),
-  // restaurant: require("@/config/restaurant.json"),
-};
+export type SiteSlug = keyof typeof siteConfigs;
 
-export function getSiteConfig(slug: string): SiteConfig {
-  const config = sites[slug];
-  if (!config) throw new Error(`No config found for site: ${slug}`);
-  return config;
+export function getSiteConfig<T extends SiteSlug>(slug: T): (typeof siteConfigs)[T] {
+  return siteConfigs[slug];
 }

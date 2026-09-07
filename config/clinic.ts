@@ -1,0 +1,72 @@
+import type { ClinicConfig } from "@/types/site";
+
+export const clinicConfig = {
+  id: "clinic",
+  siteName: "Sunshine Dental Clinic",
+  tagline: "Negombo",
+  theme: {
+    primary: "#0F6E56",
+    primaryDark: "#085041",
+    font: "system-ui, sans-serif",
+    logoText: "Sunshine Dental",
+  },
+  hero: {
+    title: "Your smile, looked after properly",
+    subtitle: "12 years serving Negombo families. Book in under a minute.",
+    cta: "Book an appointment",
+  },
+  trustSignals: [
+    { label: "Years in practice", value: "12" },
+    { label: "Patients treated", value: "8,400+" },
+    { label: "Qualified dentists", value: "3" },
+  ],
+  services: [
+    { id: "cleaning", name: "Teeth cleaning & polish", priceLKR: 3500, duration: "30 min" },
+    { id: "filling", name: "Tooth filling (composite)", priceLKR: 6500, duration: "45 min" },
+    { id: "root-canal", name: "Root canal treatment", priceLKR: 18000, duration: "90 min" },
+    { id: "extraction", name: "Tooth extraction", priceLKR: 4500, duration: "30 min" },
+    { id: "whitening", name: "Teeth whitening", priceLKR: 22000, duration: "60 min" },
+  ],
+  doctors: [
+    { name: "Dr. Nadeesha Perera", qualification: "BDS (Colombo)" },
+    { name: "Dr. Ashan Fernando", qualification: "BDS, MSc Orthodontics" },
+  ],
+  contact: {
+    address: "142 Poruthota Road, Negombo",
+    hours: "Monday–Saturday, 8:00 AM–6:00 PM",
+    mapEmbedUrl: "https://www.google.com/maps?q=Negombo%2C%20Sri%20Lanka&output=embed",
+  },
+  whatsapp: {
+    number: "94771234567",
+    defaultMessage: "Hi, I would like to book a dental appointment.",
+    ariaLabel: "Start a WhatsApp chat with Sunshine Dental Clinic",
+  },
+  navigation: [
+    { label: "Home", href: "#home" },
+    { label: "Services", href: "#services" },
+    { label: "Book now", href: "#booking" },
+  ],
+  labels: {
+    servicesTitle: "Services & transparent pricing",
+    bookingTitle: "Book an appointment",
+    nameLabel: "Full name",
+    phoneLabel: "Phone number",
+    serviceLabel: "Treatment",
+    servicePlaceholder: "Select a treatment",
+    dateLabel: "Preferred date",
+    timeLabel: "Preferred time",
+    submitLabel: "Confirm appointment request",
+    confirmationTitle: "Appointment request received",
+    confirmationReference: "Your reference number is {reference}.",
+    confirmationMessage: "We will confirm your appointment shortly via WhatsApp.",
+    themeToggleLabel: "Switch color theme",
+    menuLabel: "Open navigation menu",
+    closeMenuLabel: "Close navigation menu",
+    footerHeading: "Care that fits your life",
+    footerDescription: "Friendly, modern dental care for the whole family in Negombo.",
+    addressLabel: "Visit us",
+    hoursLabel: "Opening hours",
+    copyright: "Sunshine Dental Clinic. Demo site.",
+  },
+  bookingReferencePrefix: "SDC",
+} satisfies ClinicConfig;

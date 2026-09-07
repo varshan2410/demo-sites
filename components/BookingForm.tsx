@@ -1,51 +1,71 @@
 "use client";
 
 import { useState } from "react";
-import type { SiteConfig } from "@/lib/getSiteConfig";
+import type { ClinicConfig } from "@/types/site";
 
-export default function BookingForm({ config }: { config: SiteConfig }) {
+export default function BookingForm({ config }: { config: ClinicConfig }) {
   const [submitted, setSubmitted] = useState(false);
   const [reference, setReference] = useState("");
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    const ref = "BK" + Math.floor(100000 + Math.random() * 900000);
-    setReference(ref);
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const nextReference =
+      config.bookingReferencePrefix + "-" + Math.floor(100000 + Math.random() * 900000);
+    setReference(nextReference);
     setSubmitted(true);
   }
 
   if (submitted) {
     return (
-      <section id="booking" className="px-6 py-14 max-w-md mx-auto text-center">
-        <h2 className="text-xl font-semibold mb-2">Booking received</h2>
-        <p className="text-gray-600 mb-4">
-          Your reference number is <span className="font-mono font-semibold">{reference}</span>.
-          We'll confirm shortly via WhatsApp.
+      <section id="booking" className="mx-auto max-w-md px-6 py-14 text-center">
+        <h2 className="mb-2 text-xl font-semibold">{config.labels.confirmationTitle}</h2>
+        <p className="mb-2 text-gray-600">
+          {config.labels.confirmationReference.replace("{reference}", reference)}
         </p>
+        <p className="text-gray-600">{config.labels.confirmationMessage}</p>
       </section>
     );
   }
 
   return (
-    <section id="booking" className="px-6 py-14 max-w-md mx-auto">
-      <h2 className="text-xl font-semibold mb-6">Book an appointment</h2>
+    <section id="booking" className="mx-auto max-w-md px-6 py-14">
+      <h2 className="mb-6 text-xl font-semibold">{config.labels.bookingTitle}</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <input required type="text" placeholder="Full name" className="w-full border rounded-lg px-4 py-2" />
-        <input required type="tel" placeholder="Phone number" className="w-full border rounded-lg px-4 py-2" />
-        <select required className="w-full border rounded-lg px-4 py-2">
-          <option value="">Select a service</option>
-          {config.services.map((s) => (
-            <option key={s.id} value={s.id}>{s.name}</option>
-          ))}
-        </select>
-        <input required type="date" className="w-full border rounded-lg px-4 py-2" />
-        <input required type="time" className="w-full border rounded-lg px-4 py-2" />
+        <label className="block text-sm font-medium text-gray-700">
+          {config.labels.nameLabel}
+          <input required name="name" type="text" className="mt-1 w-full rounded-lg border px-4 py-2" />
+        </label>
+        <label className="block text-sm font-medium text-gray-700">
+          {config.labels.phoneLabel}
+          <input required name="phone" type="tel" inputMode="tel" className="mt-1 w-full rounded-lg border px-4 py-2" />
+        </label>
+        <label className="block text-sm font-medium text-gray-700">
+          {config.labels.serviceLabel}
+          <select required name="service" defaultValue="" className="mt-1 w-full rounded-lg border px-4 py-2">
+            <option value="" disabled>
+              {config.labels.servicePlaceholder}
+            </option>
+            {config.services.map((service) => (
+              <option key={service.id} value={service.id}>
+                {service.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="block text-sm font-medium text-gray-700">
+          {config.labels.dateLabel}
+          <input required name="date" type="date" className="mt-1 w-full rounded-lg border px-4 py-2" />
+        </label>
+        <label className="block text-sm font-medium text-gray-700">
+          {config.labels.timeLabel}
+          <input required name="time" type="time" className="mt-1 w-full rounded-lg border px-4 py-2" />
+        </label>
         <button
           type="submit"
-          className="w-full text-white font-medium py-3 rounded-lg"
+          className="w-full rounded-lg py-3 font-medium text-white"
           style={{ backgroundColor: config.theme.primary }}
         >
-          Confirm booking
+          {config.labels.submitLabel}
         </button>
       </form>
     </section>

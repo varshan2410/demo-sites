@@ -1,9 +1,9 @@
-import type { SiteConfig } from "@/lib/getSiteConfig";
+import type { ClinicConfig } from "@/types/site";
 
-export default function PriceList({ config }: { config: SiteConfig }) {
+export default function PriceList({ config }: { config: ClinicConfig }) {
   return (
-    <section className="px-6 py-14 max-w-3xl mx-auto">
-      <h2 className="text-2xl font-semibold mb-6">Services</h2>
+    <section id="services" className="mx-auto max-w-3xl px-6 py-14">
+      <h2 className="mb-6 text-2xl font-semibold">{config.labels.servicesTitle}</h2>
       <div className="divide-y divide-gray-100">
         {config.services.map((item) => (
           <div key={item.id} className="flex items-center justify-between py-4">
@@ -11,9 +11,7 @@ export default function PriceList({ config }: { config: SiteConfig }) {
               <div className="font-medium">{item.name}</div>
               <div className="text-sm text-gray-500">{item.duration}</div>
             </div>
-            <div className="font-semibold whitespace-nowrap">
-              LKR {item.priceLKR.toLocaleString()}
-            </div>
+            <div className="whitespace-nowrap font-semibold">LKR {item.priceLKR.toLocaleString()}</div>
           </div>
         ))}
       </div>

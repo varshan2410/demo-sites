@@ -10,8 +10,15 @@ import BusinessContactSection from "@/components/BusinessContactSection";
 
 type Currency = "LKR" | "USD" | "EUR" | "GBP";
 
-export default function HotelExperience({ config }: { config: HotelConfig }) {
+export default function HotelExperience({ config: sourceConfig }: { config: HotelConfig }) {
   const { t } = useLanguage();
+  const config = {
+    ...sourceConfig,
+    tagline: t("hotel.tagline", sourceConfig.tagline),
+    rooms: sourceConfig.rooms.map((room) => ({ ...room, name: t("hotel.room." + room.id, room.name), description: t("hotel.room." + room.id + ".description", room.description) })),
+    attractions: sourceConfig.attractions.map((place, index) => ({ ...place, name: t("hotel.attraction." + index + ".name", place.name), description: t("hotel.attraction." + index + ".description", place.description) })),
+    labels: new Proxy(sourceConfig.labels, { get(target, key) { const value = Reflect.get(target, key); return typeof key === "string" && typeof value === "string" ? t("hotel.labels." + key, value) : value; } }),
+  };
   const [currency, setCurrency] = useState<Currency>("LKR");
   const [reference, setReference] = useState("");
   const [enquiry, setEnquiry] = useState<Record<string, string> | null>(null);
@@ -57,7 +64,7 @@ export default function HotelExperience({ config }: { config: HotelConfig }) {
         <div className="absolute inset-0 bg-gradient-to-r from-stone-950 via-stone-950/75 to-stone-950/20" />
         <div className="relative mx-auto flex min-h-[430px] max-w-6xl items-end">
           <div className="max-w-2xl">
-            <p className="text-xs font-bold uppercase tracking-[0.24em] text-amber-100">{config.tagline}</p>
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-amber-100">{t("hotel.tagline", config.tagline)}</p>
             <h1 className="mt-5 text-5xl font-semibold leading-[1.02] tracking-tight md:text-7xl">{t("hotel.hero.title", config.hero.title)}</h1>
             <p className="mt-6 max-w-lg text-lg leading-8 text-stone-200">{t("hotel.hero.subtitle", config.hero.subtitle)}</p>
             <a href="#availability" className="ui-button mt-8 inline-flex rounded-full bg-white px-6 py-3 font-semibold text-stone-950 hover:bg-amber-50">
@@ -89,7 +96,7 @@ export default function HotelExperience({ config }: { config: HotelConfig }) {
                 </div>
                 <p className="text-sm font-semibold" style={{ color: config.theme.primary }}>{room.guests}</p>
                 <h3 className="mt-2 text-xl font-semibold dark:text-white">{t("hotel.room." + room.id, room.name)}</h3>
-                <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">{room.description}</p>
+                <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">{t("hotel.room." + room.id + ".description", room.description)}</p>
                 <ul className="mt-5 space-y-2 text-sm text-slate-600 dark:text-slate-300">
                   {room.amenities.map((amenity) => <li key={amenity}>✓ {amenity}</li>)}
                 </ul>
@@ -110,14 +117,14 @@ export default function HotelExperience({ config }: { config: HotelConfig }) {
               <article key={place.name} className="rounded-2xl bg-white p-6 dark:bg-slate-950">
                 <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: config.theme.primary }}>{place.distance}</p>
                 <h3 className="mt-3 text-lg font-semibold dark:text-white">{place.name}</h3>
-                <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">{place.description}</p>
+                <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">{t("hotel.attraction." + config.attractions.indexOf(place) + ".description", place.description)}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <ExperienceGallery id="gallery" eyebrow={config.labels.galleryEyebrow} title={config.labels.galleryTitle} images={config.gallery} accent={config.theme.primary} />
+      <ExperienceGallery id="gallery" eyebrow={config.labels.galleryEyebrow} title={config.labels.galleryTitle} eyebrowKey="hotel.labels.galleryEyebrow" titleKey="hotel.labels.galleryTitle" images={config.gallery} accent={config.theme.primary} />
 
       <section id="availability" className="px-6 py-16 md:py-24">
         <div className="mx-auto max-w-2xl">
@@ -142,7 +149,7 @@ export default function HotelExperience({ config }: { config: HotelConfig }) {
                 <label className="text-sm font-medium dark:text-slate-200">{t("hotel.labels.guestsLabel", config.labels.guestsLabel)}<input required name="guests" type="number" min="1" max="6" defaultValue="2" className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-white" /></label>
                 <label className="text-sm font-medium dark:text-slate-200">{t("hotel.labels.roomLabel", config.labels.roomLabel)}<select required name="room" defaultValue="" className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-white"><option value="" disabled>{t("hotel.labels.roomPlaceholder", config.labels.roomPlaceholder)}</option>{config.rooms.map((room) => <option key={room.id} value={room.id}>{t("hotel.room." + room.id, room.name)}</option>)}</select></label>
                 <label className="text-sm font-medium dark:text-slate-200">{t("hotel.labels.enquiryNameLabel", config.labels.enquiryNameLabel)}<input required name="name" type="text" className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-white" /></label>
-                <label className="text-sm font-medium dark:text-slate-200">{config.labels.enquiryPhoneLabel}<input required name="phone" type="tel" className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-white" /></label>
+                <label className="text-sm font-medium dark:text-slate-200">{t("hotel.labels.enquiryPhoneLabel", config.labels.enquiryPhoneLabel)}<input required name="phone" type="tel" className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-white" /></label>
                 {error ? <p role="alert" className="sm:col-span-2 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p> : null}
                 <button disabled={isSubmitting} type="submit" className="ui-button sm:col-span-2 inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 font-semibold text-white disabled:cursor-wait disabled:opacity-60" style={{ backgroundColor: config.theme.primary }}>{isSubmitting ? <><span aria-hidden="true" className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />Submitting…</> : t("hotel.labels.enquirySubmitLabel", config.labels.enquirySubmitLabel)}</button>
               </form>
@@ -150,7 +157,7 @@ export default function HotelExperience({ config }: { config: HotelConfig }) {
           )}
         </div>
       </section>
-      <BusinessContactSection eyebrow={config.labels.contactEyebrow} title={config.labels.contactTitle} mapTitle={config.labels.mapTitle} contact={config.contact} whatsapp={config.whatsapp} theme={config.theme} actionLabel="Chat on WhatsApp" />
+      <BusinessContactSection eyebrow={config.labels.contactEyebrow} title={config.labels.contactTitle} eyebrowKey="hotel.labels.contactEyebrow" titleKey="hotel.labels.contactTitle" mapTitle={config.labels.mapTitle} contact={config.contact} whatsapp={config.whatsapp} theme={config.theme} actionLabel="Chat on WhatsApp" actionKey="common.chatWhatsapp" />
       {enquiry && isMounted ? createPortal(
         <article id="hotel-voucher-receipt">
           <div className="receipt-card">

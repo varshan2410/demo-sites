@@ -1,12 +1,14 @@
 import Image from "next/image";
 import type { GalleryImage } from "@/types/site";
+import { useLanguage } from "@/components/LanguageProvider";
 
-export default function ExperienceGallery({ id, eyebrow, title, images, accent }: { id: string; eyebrow: string; title: string; images: GalleryImage[]; accent: string }) {
+export default function ExperienceGallery({ id, eyebrow, title, eyebrowKey, titleKey, images, accent }: { id: string; eyebrow: string; title: string; eyebrowKey: string; titleKey: string; images: GalleryImage[]; accent: string }) {
+  const { t } = useLanguage();
   return (
     <section id={id} className="px-6 py-16 md:py-24">
       <div className="mx-auto max-w-6xl">
-        <p className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: accent }}>{eyebrow}</p>
-        <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-tight dark:text-white md:text-4xl">{title}</h2>
+        <p className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: accent }}>{t(eyebrowKey, eyebrow)}</p>
+        <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-tight dark:text-white md:text-4xl">{t(titleKey, title)}</h2>
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {images.map((image, index) => (
             <figure key={image.src} className={"group relative overflow-hidden rounded-3xl bg-slate-100 dark:bg-slate-900 " + (index === 0 ? "sm:col-span-2 sm:row-span-2 aspect-[4/3] sm:aspect-auto" : "aspect-[4/3]")}>

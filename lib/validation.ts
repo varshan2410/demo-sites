@@ -21,7 +21,17 @@ export const restaurantReservationSchema = z.object({
 });
 
 export function validationError(error: z.ZodError) {
-  return Response.json({ ok: false, error: "Validation failed", fields: error.flatten().fieldErrors }, { status: 400 });
+  return apiResponse({ ok: false, error: "Validation failed", fields: error.flatten().fieldErrors }, { status: 400 });
+}
+
+export function apiResponse(body: unknown, init: ResponseInit = {}) {
+  return Response.json(body, {
+    ...init,
+    headers: {
+      "Cache-Control": "no-store, max-age=0",
+      ...init.headers,
+    },
+  });
 }
 
 export function createReference(prefix: string) {
@@ -43,5 +53,5 @@ export function isRateLimited(request: Request, scope: string, limit = 6, window
 }
 
 export function rateLimitError() {
-  return Response.json({ ok: false, error: "Too many requests. Please wait a minute and try again.", fields: {} }, { status: 429 });
+  return apiResponse({ ok: false, error: "Too many requests. Please wait a minute and try again.", fields: {} }, { status: 429 });
 }

@@ -1,0 +1,9 @@
+"use client";
+
+import { useLanguage } from "@/components/LanguageProvider";
+import type { ContactConfig, ThemeConfig } from "@/types/site";
+
+export default function RestaurantReservationReceipt({ siteName, contact, theme, reservation, reference }: { siteName: string; contact: ContactConfig; theme: ThemeConfig; reservation: { name: string; party: number; date: string; time: string }; reference: string }) {
+  const { t } = useLanguage();
+  return <article id="restaurant-reservation-receipt"><div className="receipt-card"><header className="receipt-header" style={{ backgroundColor: theme.primary }}><p style={{ margin: 0, fontSize: 12, fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase" }}>{t("print.restaurant.title", "Reservation receipt")}</p><h1 style={{ margin: "8px 0 0", fontSize: 26 }}>{siteName}</h1></header><div className="receipt-body"><p style={{ margin: "0 0 20px", fontSize: 15 }}>{t("print.requestReceived", "Request received")} · {t("print.reference", "Reference")} <strong>{reference}</strong></p><div className="receipt-grid"><div><p className="receipt-label">{t("print.guest", "Guest")}</p><p className="receipt-value">{reservation.name}</p></div><div><p className="receipt-label">{t("print.partySize", "Party size")}</p><p className="receipt-value">{reservation.party}</p></div><div><p className="receipt-label">{t("print.date", "Date")}</p><p className="receipt-value">{reservation.date}</p></div><div><p className="receipt-label">{t("print.time", "Time")}</p><p className="receipt-value">{reservation.time}</p></div><div><p className="receipt-label">{t("print.status", "Status")}</p><p className="receipt-value">{t("print.pendingConfirmation", "Pending confirmation")}</p></div></div><footer className="receipt-footer">{t("print.restaurant.note", "This is a table request, not a confirmed reservation. Our team will contact you shortly.")}<br />{contact.hours}</footer></div></div></article>;
+}

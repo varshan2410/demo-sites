@@ -48,6 +48,7 @@ export interface ContactConfig {
   address: string;
   hours: string;
   mapEmbedUrl: string;
+  directionsUrl?: string;
 }
 
 export interface WhatsAppConfig {
@@ -178,6 +179,9 @@ export interface HotelLabels extends ShellLabels {
   contactEyebrow: string;
   contactTitle: string;
   mapTitle: string;
+  transferTitle: string;
+  transferDescription: string;
+  directionsLabel: string;
 }
 
 export interface HotelConfig extends SiteShellConfig {

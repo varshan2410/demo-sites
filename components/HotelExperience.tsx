@@ -7,6 +7,7 @@ import type { HotelConfig } from "@/types/site";
 import { useLanguage } from "@/components/LanguageProvider";
 import ExperienceGallery from "@/components/ExperienceGallery";
 import BusinessContactSection from "@/components/BusinessContactSection";
+import HotelTravelDetails from "@/components/HotelTravelDetails";
 
 type Currency = "LKR" | "USD" | "EUR" | "GBP";
 type FieldErrors = Record<string, string[] | undefined>;
@@ -156,6 +157,7 @@ export default function HotelExperience({ config: sourceConfig }: { config: Hote
           )}
         </div>
       </section>
+      <HotelTravelDetails contact={config.contact} theme={config.theme} title={config.labels.transferTitle} description={config.labels.transferDescription} directionsLabel={config.labels.directionsLabel} />
       <BusinessContactSection eyebrow={config.labels.contactEyebrow} title={config.labels.contactTitle} eyebrowKey="hotel.labels.contactEyebrow" titleKey="hotel.labels.contactTitle" mapTitle={config.labels.mapTitle} contact={config.contact} whatsapp={config.whatsapp} theme={config.theme} actionLabel="Chat on WhatsApp" actionKey="common.chatWhatsapp" />
       {enquiry && isMounted ? createPortal(
         <article id="hotel-voucher-receipt">

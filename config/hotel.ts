@@ -46,6 +46,7 @@ export const hotelConfig = {
     address: "Talpe, Galle, Southern Province, Sri Lanka",
     hours: "Reservations: daily, 8:00 AM–8:00 PM",
     mapEmbedUrl: "https://www.google.com/maps?q=Talpe%2C%20Galle%2C%20Sri%20Lanka&output=embed",
+    directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=Talpe%2CGalle%2CSri%20Lanka",
   },
   whatsapp: {
     number: "94771234567",
@@ -87,6 +88,9 @@ export const hotelConfig = {
     contactEyebrow: "Find your way here",
     contactTitle: "A private corner of the southern coast",
     mapTitle: "Map showing the Kahanda Cove area in Talpe, Galle",
+    transferTitle: "Arrive without the guesswork",
+    transferDescription: "Private airport and rail-station transfers can be arranged with our reservations team. Share your arrival time on WhatsApp and we will confirm the route and price before you travel.",
+    directionsLabel: "Get directions",
   },
   bookingReferencePrefix: "KCV",
 } satisfies HotelConfig;

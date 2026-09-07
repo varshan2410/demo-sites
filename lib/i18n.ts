@@ -75,3 +75,15 @@ Object.assign(translations.ta, {
   "clinic.labels.timePlaceholder": "கிடைக்கும் நேரத்தைத் தேர்ந்தெடுக்கவும்",
   "restaurant.labels.reservationTimePlaceholder": "கிடைக்கும் நேரத்தைத் தேர்ந்தெடுக்கவும்",
 });
+
+Object.assign(translations.si, {
+  "hotel.labels.transferTitle": "සැලකිල්ලකින් තොරව පැමිණෙන්න",
+  "hotel.labels.transferDescription": "ගුවන් තොටුපළ සහ දුම්රිය ස්ථාන පෞද්ගලික ප්‍රවාහන අපගේ වෙන්කිරීම් කණ්ඩායම මඟින් සකස් කළ හැක. ඔබගේ පැමිණීමේ වේලාව WhatsApp හරහා එවන්න; ගමනට පෙර මාර්ගය සහ මිල තහවුරු කරමු.",
+  "hotel.labels.directionsLabel": "මාර්ගය ලබාගන්න",
+});
+
+Object.assign(translations.ta, {
+  "hotel.labels.transferTitle": "கவலையில்லாமல் வந்தடையுங்கள்",
+  "hotel.labels.transferDescription": "தனியார் விமானநிலைய மற்றும் ரயில் நிலைய மாற்றங்களை எங்கள் முன்பதிவு குழு ஏற்பாடு செய்யும். உங்கள் வருகை நேரத்தை WhatsApp-இல் பகிருங்கள்; பயணத்திற்கு முன் வழி மற்றும் விலையை உறுதிப்படுத்துவோம்.",
+  "hotel.labels.directionsLabel": "வழிமுறைகளைப் பெறுங்கள்",
+});

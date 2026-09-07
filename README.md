@@ -48,7 +48,8 @@ See docs/architecture.md for more detail.
 - Hotel multi-currency display
 - Restaurant menu filtering and cart
 - PWA manifest, service worker and offline fallback
-- Optimized local WebP imagery
+- Responsive AVIF/WebP image delivery through Next.js
+- Loading, route-error and global-error recovery states
 
 ## Honest scope
 

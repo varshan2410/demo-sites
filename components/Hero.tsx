@@ -1,7 +1,10 @@
+"use client";
+
 import type { ClinicConfig } from "@/types/site";
 import Image from "next/image";
-
+import { useLanguage } from "@/components/LanguageProvider";
 export default function Hero({ config }: { config: ClinicConfig }) {
+  const { t } = useLanguage();
   return (
     <section id="home" className="relative isolate overflow-hidden bg-slate-950 px-6 py-24 text-white md:py-36">
       <Image src={config.hero.image} alt="" fill priority sizes="100vw" className="object-cover object-center" />
@@ -12,11 +15,11 @@ export default function Hero({ config }: { config: ClinicConfig }) {
             {config.siteName} <span aria-hidden="true">•</span> {config.tagline}
           </p>
           <h1 className="max-w-xl text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl md:text-6xl">
-            {config.hero.title}
+            {t("clinic.hero.title", config.hero.title)}
           </h1>
-          <p className="mt-6 max-w-lg text-base leading-7 text-slate-200 md:text-lg">{config.hero.subtitle}</p>
+          <p className="mt-6 max-w-lg text-base leading-7 text-slate-200 md:text-lg">{t("clinic.hero.subtitle", config.hero.subtitle)}</p>
           <a href="#booking" className="mt-8 inline-flex rounded-full bg-white px-6 py-3 font-semibold text-slate-950 shadow-sm transition hover:-translate-y-0.5 hover:bg-teal-50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-950">
-            {config.hero.cta}
+            {t("clinic.hero.cta", config.hero.cta)}
           </a>
         </div>
       </div>

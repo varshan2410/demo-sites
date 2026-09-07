@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  font-family: var(--font-site, system-ui, sans-serif);
+  font-family: var(--font-site, "Noto Sans Sinhala", "Noto Sans Tamil", system-ui, sans-serif);
   background: #ffffff;
 }
 

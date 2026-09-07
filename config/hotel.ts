@@ -7,7 +7,7 @@ export const hotelConfig = {
   theme: {
     primary: "#8A4B2A",
     primaryDark: "#60311B",
-    font: "Georgia, 'Times New Roman', serif",
+    font: "'Noto Sans Sinhala', 'Noto Sans Tamil', Georgia, 'Times New Roman', serif",
     logoText: "Kahanda Cove",
   },
   hero: {

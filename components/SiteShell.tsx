@@ -2,6 +2,7 @@ import type { CSSProperties, ReactNode } from "react";
 import type { SiteShellConfig } from "@/types/site";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
+import { LanguageProvider } from "@/components/LanguageProvider";
 
 export default function SiteShell({
   config,
@@ -18,9 +19,11 @@ export default function SiteShell({
 
   return (
     <div style={brandStyles} className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-      <SiteHeader config={config} />
-      {children}
-      <SiteFooter config={config} />
+      <LanguageProvider>
+        <SiteHeader config={config} />
+        {children}
+        <SiteFooter config={config} />
+      </LanguageProvider>
     </div>
   );
 }

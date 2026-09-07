@@ -1,16 +1,20 @@
+"use client";
+
 import Image from "next/image";
 import type { ClinicConfig } from "@/types/site";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export default function GallerySection({ config }: { config: ClinicConfig }) {
+  const { t } = useLanguage();
   return (
     <section id="gallery" className="px-6 py-16 md:py-24">
       <div className="mx-auto max-w-6xl">
         <div className="max-w-2xl">
           <p className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: config.theme.primary }}>
-            {config.labels.galleryEyebrow}
+            {t("clinic.labels.galleryEyebrow", config.labels.galleryEyebrow)}
           </p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight dark:text-white md:text-4xl">{config.labels.galleryTitle}</h2>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight dark:text-white md:text-4xl">{t("clinic.labels.galleryTitle", config.labels.galleryTitle)}</h2>
         </div>
         <div className="mt-10 grid gap-6 lg:grid-cols-2">
           <BeforeAfterSlider config={config} />

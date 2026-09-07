@@ -1,6 +1,9 @@
-import type { SiteShellConfig } from "@/types/site";
+"use client";
 
+import type { SiteShellConfig } from "@/types/site";
+import { useLanguage } from "@/components/LanguageProvider";
 export default function SiteFooter({ config }: { config: SiteShellConfig }) {
+  const { t } = useLanguage();
   return (
     <footer className="bg-slate-950 px-6 py-12 text-slate-200">
       <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-3">
@@ -9,11 +12,11 @@ export default function SiteFooter({ config }: { config: SiteShellConfig }) {
           <p className="mt-3 max-w-sm text-sm leading-6 text-slate-400">{config.labels.footerDescription}</p>
         </div>
         <div>
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-white">{config.labels.addressLabel}</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-white">{t("common.addressLabel", config.labels.addressLabel)}</h2>
           <p className="mt-3 text-sm leading-6 text-slate-400">{config.contact.address}</p>
         </div>
         <div>
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-white">{config.labels.hoursLabel}</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-white">{t("common.hoursLabel", config.labels.hoursLabel)}</h2>
           <p className="mt-3 text-sm leading-6 text-slate-400">{config.contact.hours}</p>
         </div>
       </div>

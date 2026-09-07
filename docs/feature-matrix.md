@@ -11,6 +11,6 @@
 | Light/dark theme | Complete | System preference plus manual persisted toggle. |
 | PWA/offline visited pages | Simplified | Manifest and caching are included; queued submissions are deferred. |
 | PDF exports | Simplified | Print-ready confirmation/voucher views use the browser print dialog. |
-| Multilingual content | Deferred | Requires reviewed Sinhala/Tamil translations and font QA before claiming completion. |
+| Multilingual content | Simplified | Shared persisted language switcher, Sinhala/Tamil-capable fonts, translated navigation, core headings, forms, clinic services, hotel rooms and restaurant menu. Secondary descriptive copy still needs native-language review. |
 | Payment gateways | Deferred | Sandbox credentials and server-side payment callbacks are required. |
 | Production availability engine | Deferred | Demo availability is intentionally enquiry-based. |

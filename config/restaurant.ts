@@ -4,7 +4,7 @@ export const restaurantConfig = {
   id: "restaurant",
   siteName: "Cinnamon & Lime",
   tagline: "Sri Lankan kitchen · Colombo 07",
-  theme: { primary: "#A43320", primaryDark: "#702316", font: "Georgia, 'Times New Roman', serif", logoText: "Cinnamon & Lime" },
+  theme: { primary: "#A43320", primaryDark: "#702316", font: "'Noto Sans Sinhala', 'Noto Sans Tamil', Georgia, 'Times New Roman', serif", logoText: "Cinnamon & Lime" },
   hero: { title: "Sri Lankan food, with a little more fire.", subtitle: "Bold island flavours, seasonal produce and long evenings around the table.", cta: "Explore the menu", image: "/images/restaurant/hero.webp" },
   navigation: [
     { label: "Home", href: "#home" },

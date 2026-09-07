@@ -9,6 +9,7 @@ export interface HeroConfig {
   title: string;
   subtitle: string;
   cta: string;
+  image: string;
 }
 
 export interface TrustSignal {
@@ -26,7 +27,9 @@ export interface Service {
 export interface Doctor {
   name: string;
   qualification: string;
-  photo?: string;
+  specialty: string;
+  bio: string;
+  photo: string;
 }
 
 export interface ContactConfig {
@@ -53,6 +56,8 @@ export interface ClinicLabels {
   phoneLabel: string;
   serviceLabel: string;
   servicePlaceholder: string;
+  doctorLabel: string;
+  doctorPlaceholder: string;
   dateLabel: string;
   timeLabel: string;
   submitLabel: string;
@@ -67,6 +72,13 @@ export interface ClinicLabels {
   addressLabel: string;
   hoursLabel: string;
   copyright: string;
+  doctorsEyebrow: string;
+  doctorsTitle: string;
+  doctorsDescription: string;
+  contactEyebrow: string;
+  contactTitle: string;
+  mapTitle: string;
+  contactWhatsAppLabel: string;
 }
 
 export interface ClinicConfig {

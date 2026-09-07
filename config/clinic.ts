@@ -14,6 +14,7 @@ export const clinicConfig = {
     title: "Your smile, looked after properly",
     subtitle: "12 years serving Negombo families. Book in under a minute.",
     cta: "Book an appointment",
+    image: "/images/clinic/hero.webp",
   },
   trustSignals: [
     { label: "Years in practice", value: "12" },
@@ -28,8 +29,20 @@ export const clinicConfig = {
     { id: "whitening", name: "Teeth whitening", priceLKR: 22000, duration: "60 min" },
   ],
   doctors: [
-    { name: "Dr. Nadeesha Perera", qualification: "BDS (Colombo)" },
-    { name: "Dr. Ashan Fernando", qualification: "BDS, MSc Orthodontics" },
+    {
+      name: "Dr. Nadeesha Perera",
+      qualification: "BDS (Colombo)",
+      specialty: "General & cosmetic dentistry",
+      bio: "Known for calm, considered care and a gentle approach with nervous patients.",
+      photo: "/images/clinic/dr-nadeesha.webp",
+    },
+    {
+      name: "Dr. Ashan Fernando",
+      qualification: "BDS, MSc Orthodontics",
+      specialty: "Orthodontics & smile design",
+      bio: "Focused on confident, long-lasting smiles through thoughtful treatment planning.",
+      photo: "/images/clinic/dr-ashan.webp",
+    },
   ],
   contact: {
     address: "142 Poruthota Road, Negombo",
@@ -44,6 +57,8 @@ export const clinicConfig = {
   navigation: [
     { label: "Home", href: "#home" },
     { label: "Services", href: "#services" },
+    { label: "Doctors", href: "#doctors" },
+    { label: "Contact", href: "#contact" },
     { label: "Book now", href: "#booking" },
   ],
   labels: {
@@ -53,6 +68,8 @@ export const clinicConfig = {
     phoneLabel: "Phone number",
     serviceLabel: "Treatment",
     servicePlaceholder: "Select a treatment",
+    doctorLabel: "Preferred dentist",
+    doctorPlaceholder: "Select a dentist",
     dateLabel: "Preferred date",
     timeLabel: "Preferred time",
     submitLabel: "Confirm appointment request",
@@ -67,6 +84,13 @@ export const clinicConfig = {
     addressLabel: "Visit us",
     hoursLabel: "Opening hours",
     copyright: "Sunshine Dental Clinic. Demo site.",
+    doctorsEyebrow: "Meet your dental team",
+    doctorsTitle: "Expert care, without the clinical coldness",
+    doctorsDescription: "Our dentists take time to listen, explain your options, and make every visit feel straightforward.",
+    contactEyebrow: "Find the clinic",
+    contactTitle: "Convenient care, right in Negombo",
+    mapTitle: "Map showing the Sunshine Dental Clinic area in Negombo",
+    contactWhatsAppLabel: "Chat on WhatsApp",
   },
   bookingReferencePrefix: "SDC",
 } satisfies ClinicConfig;

@@ -126,3 +126,13 @@ Object.assign(translations.ta, { "print.hotel.title": "தங்கல் வி
 
 Object.assign(translations.si, { "print.restaurant.title": "මේස වෙන්කිරීමේ රිසිට්පත", "print.partySize": "කණ්ඩායම් ප්‍රමාණය", "print.date": "දිනය", "print.time": "වේලාව", "print.restaurant.note": "මෙය මේස ඉල්ලීමක් වන අතර තහවුරු කළ වෙන්කිරීමක් නොවේ. අපගේ කණ්ඩායම ඉක්මනින් සම්බන්ධ වේ." });
 Object.assign(translations.ta, { "print.restaurant.title": "மேசை முன்பதிவு ரசீது", "print.partySize": "குழு அளவு", "print.date": "தேதி", "print.time": "நேரம்", "print.restaurant.note": "இது மேசை கோரிக்கை; உறுதிப்படுத்தப்பட்ட முன்பதிவு அல்ல. எங்கள் குழு விரைவில் தொடர்புகொள்ளும்." });
+
+Object.assign(translations.si, {
+  "print.menu.title": "ආපනශාලා මෙනුව", "print.menu.category.Mains": "ප්‍රධාන ආහාර", "print.menu.category.Small plates": "කුඩා ආහාර", "print.menu.category.Dessert": "අතුරුපස", "print.menu.category.Drinks": "පාන වර්ග",
+  "print.catering.title": "ආහාර සැපයීමේ මිල කැඳවීම", "print.catering.estimatedQuote": "ඇස්තමේන්තුගත ආහාර සැපයීමේ මිල කැඳවීම", "print.catering.package": "පැකේජය", "print.catering.rate": "අනුපාතය", "print.catering.perPerson": "එක් පුද්ගලයෙකුට", "print.catering.estimatedTotal": "ඇස්තමේන්තුගත එකතුව", "print.catering.note": "මෙය ඇස්තමේන්තුගත මිල කැඳවීමකි. අවසන් තේරීම්, සේවා ගාස්තු සහ ලබාගත හැකි බව ආපනශාලාව විසින් තහවුරු කරනු ලැබේ.",
+});
+
+Object.assign(translations.ta, {
+  "print.menu.title": "உணவக மெனு", "print.menu.category.Mains": "முக்கிய உணவுகள்", "print.menu.category.Small plates": "சிற்றுண்டிகள்", "print.menu.category.Dessert": "இனிப்புகள்", "print.menu.category.Drinks": "பானங்கள்",
+  "print.catering.title": "உணவளிப்பு மேற்கோள்", "print.catering.estimatedQuote": "மதிப்பிடப்பட்ட உணவளிப்பு மேற்கோள்", "print.catering.package": "தொகுப்பு", "print.catering.rate": "விலை", "print.catering.perPerson": "ஒருவருக்கு", "print.catering.estimatedTotal": "மதிப்பிடப்பட்ட மொத்தம்", "print.catering.note": "இது ஒரு மதிப்பிடப்பட்ட மேற்கோள். இறுதித் தேர்வுகள், சேவைக் கட்டணங்கள் மற்றும் கிடைக்கும் தன்மை ஆகியவை உணவகத்தால் உறுதிப்படுத்தப்படும்.",
+});

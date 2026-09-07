@@ -21,11 +21,14 @@ html.dark body {
   }
 
   #booking-confirmation,
-  #booking-confirmation * {
+  #booking-confirmation *,
+  #hotel-voucher,
+  #hotel-voucher * {
     visibility: visible;
   }
 
-  #booking-confirmation {
+  #booking-confirmation,
+  #hotel-voucher {
     position: absolute;
     inset: 0;
     width: 100%;

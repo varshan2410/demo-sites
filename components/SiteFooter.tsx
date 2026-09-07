@@ -1,6 +1,6 @@
-import type { ClinicConfig } from "@/types/site";
+import type { SiteShellConfig } from "@/types/site";
 
-export default function SiteFooter({ config }: { config: ClinicConfig }) {
+export default function SiteFooter({ config }: { config: SiteShellConfig }) {
   return (
     <footer className="bg-slate-950 px-6 py-12 text-slate-200">
       <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-3">

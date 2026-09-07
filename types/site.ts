@@ -60,7 +60,26 @@ export interface NavigationItem {
   href: string;
 }
 
-export interface ClinicLabels {
+export interface ShellLabels {
+  themeToggleLabel: string;
+  menuLabel: string;
+  closeMenuLabel: string;
+  footerHeading: string;
+  footerDescription: string;
+  addressLabel: string;
+  hoursLabel: string;
+  copyright: string;
+}
+
+export interface SiteShellConfig {
+  siteName: string;
+  theme: ThemeConfig;
+  contact: ContactConfig;
+  navigation: NavigationItem[];
+  labels: ShellLabels;
+}
+
+export interface ClinicLabels extends ShellLabels {
   servicesTitle: string;
   bookingTitle: string;
   nameLabel: string;
@@ -75,14 +94,6 @@ export interface ClinicLabels {
   confirmationTitle: string;
   confirmationReference: string;
   confirmationMessage: string;
-  themeToggleLabel: string;
-  menuLabel: string;
-  closeMenuLabel: string;
-  footerHeading: string;
-  footerDescription: string;
-  addressLabel: string;
-  hoursLabel: string;
-  copyright: string;
   doctorsEyebrow: string;
   doctorsTitle: string;
   doctorsDescription: string;
@@ -118,5 +129,57 @@ export interface ClinicConfig {
   whatsapp: WhatsAppConfig;
   navigation: NavigationItem[];
   labels: ClinicLabels;
+  bookingReferencePrefix: string;
+}
+
+export interface HotelRoom {
+  id: string;
+  name: string;
+  description: string;
+  guests: string;
+  rateLKR: number;
+  amenities: string[];
+  image: string;
+}
+
+export interface Attraction {
+  name: string;
+  distance: string;
+  description: string;
+}
+
+export interface HotelLabels extends ShellLabels {
+  roomsEyebrow: string;
+  roomsTitle: string;
+  roomsRateSuffix: string;
+  availabilityTitle: string;
+  checkInLabel: string;
+  checkOutLabel: string;
+  guestsLabel: string;
+  roomLabel: string;
+  roomPlaceholder: string;
+  enquiryNameLabel: string;
+  enquiryPhoneLabel: string;
+  enquirySubmitLabel: string;
+  directBookingMessage: string;
+  attractionsEyebrow: string;
+  attractionsTitle: string;
+  confirmationTitle: string;
+  confirmationReference: string;
+  confirmationWhatsAppLabel: string;
+  printVoucherLabel: string;
+  currencyLabel: string;
+  indicativeRateLabel: string;
+}
+
+export interface HotelConfig extends SiteShellConfig {
+  id: "hotel";
+  tagline: string;
+  hero: HeroConfig;
+  rooms: HotelRoom[];
+  attractions: Attraction[];
+  exchangeRates: Record<"LKR" | "USD" | "EUR" | "GBP", number>;
+  whatsapp: WhatsAppConfig;
+  labels: HotelLabels;
   bookingReferencePrefix: string;
 }

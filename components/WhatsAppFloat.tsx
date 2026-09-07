@@ -1,6 +1,6 @@
-import type { ClinicConfig } from "@/types/site";
+import type { WhatsAppConfig } from "@/types/site";
 
-export default function WhatsAppFloat({ config }: { config: ClinicConfig }) {
+export default function WhatsAppFloat({ config }: { config: { whatsapp: WhatsAppConfig } }) {
   const url =
     "https://wa.me/" +
     config.whatsapp.number +

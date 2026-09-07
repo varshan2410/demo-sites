@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
-import type { ClinicConfig } from "@/types/site";
+import type { SiteShellConfig } from "@/types/site";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 
@@ -7,7 +7,7 @@ export default function SiteShell({
   config,
   children,
 }: {
-  config: ClinicConfig;
+  config: SiteShellConfig;
   children: ReactNode;
 }) {
   const brandStyles = {

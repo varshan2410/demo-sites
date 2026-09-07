@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import type { ClinicConfig } from "@/types/site";
+import type { SiteShellConfig } from "@/types/site";
 import ThemeToggle from "@/components/ThemeToggle";
 
-export default function SiteHeader({ config }: { config: ClinicConfig }) {
+export default function SiteHeader({ config }: { config: SiteShellConfig }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (

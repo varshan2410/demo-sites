@@ -36,7 +36,7 @@ export default function BookingForm({ config }: { config: ClinicConfig }) {
       }
       const response = await fetch("/api/clinic/appointments", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       const result = await response.json();
-      if (!response.ok) { setError(result.error ?? "Please check your details and try again."); setFieldErrors(result.fields ?? {}); return; }
+      if (!response.ok) { const fields = result.fields ?? {}; setError(Object.values(fields).flat().join(" ") || result.error || "Please check your details and try again."); setFieldErrors(fields); return; }
       await new Promise((resolve) => setTimeout(resolve, 280));
       setBooking({ name: result.data.name, service: config.services.find((service) => service.id === result.data.service)?.name ?? result.data.service, doctor: result.data.doctor, date: result.data.date, time: result.data.time });
       setReference(result.reference);
@@ -93,18 +93,19 @@ export default function BookingForm({ config }: { config: ClinicConfig }) {
       <div className="mx-auto max-w-xl rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200 dark:bg-slate-950 dark:ring-slate-800 sm:p-8">
         <h2 className="mb-6 text-2xl font-semibold dark:text-white">{t("clinic.labels.bookingTitle", config.labels.bookingTitle)}</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
+          <p className="text-xs text-slate-500 dark:text-slate-400"><span aria-hidden="true" className="font-bold text-red-600">*</span> {t("form.requiredFields", "Required fields")}</p>
           <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">
-            {t("clinic.labels.nameLabel", config.labels.nameLabel)}
-            <input required name="name" type="text" aria-invalid={Boolean(fieldErrors.name)} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-950 aria-[invalid=true]:border-red-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
+            {t("clinic.labels.nameLabel", config.labels.nameLabel)} <span aria-hidden="true" className="text-red-600">*</span>
+            <input required name="name" type="text" minLength={2} maxLength={100} aria-invalid={Boolean(fieldErrors.name)} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-950 aria-[invalid=true]:border-red-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
             {fieldErrors.name?.[0] ? <span className="mt-1 block text-xs text-red-600">{fieldErrors.name[0]}</span> : null}
           </label>
           <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">
-            {t("clinic.labels.phoneLabel", config.labels.phoneLabel)}
-            <input required name="phone" type="tel" inputMode="tel" aria-invalid={Boolean(fieldErrors.phone)} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-950 aria-[invalid=true]:border-red-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
+            {t("clinic.labels.phoneLabel", config.labels.phoneLabel)} <span aria-hidden="true" className="text-red-600">*</span>
+            <input required name="phone" type="tel" inputMode="tel" minLength={7} maxLength={30} pattern="[0-9+()\-\s]{7,30}" title="Enter at least 7 digits; spaces, +, - and parentheses are allowed." aria-invalid={Boolean(fieldErrors.phone)} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-950 aria-[invalid=true]:border-red-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
             {fieldErrors.phone?.[0] ? <span className="mt-1 block text-xs text-red-600">{fieldErrors.phone[0]}</span> : null}
           </label>
           <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">
-            {t("clinic.labels.serviceLabel", config.labels.serviceLabel)}
+            {t("clinic.labels.serviceLabel", config.labels.serviceLabel)} <span aria-hidden="true" className="text-red-600">*</span>
             <select required name="service" defaultValue="" aria-invalid={Boolean(fieldErrors.service)} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-950 aria-[invalid=true]:border-red-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
               <option value="" disabled>{t("clinic.labels.servicePlaceholder", config.labels.servicePlaceholder)}</option>
               {config.services.map((service) => <option key={service.id} value={service.id}>{t("clinic.service." + service.id, service.name)}</option>)}
@@ -112,7 +113,7 @@ export default function BookingForm({ config }: { config: ClinicConfig }) {
             {fieldErrors.service?.[0] ? <span className="mt-1 block text-xs text-red-600">{fieldErrors.service[0]}</span> : null}
           </label>
           <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">
-            {t("clinic.labels.doctorLabel", config.labels.doctorLabel)}
+            {t("clinic.labels.doctorLabel", config.labels.doctorLabel)} <span aria-hidden="true" className="text-red-600">*</span>
             <select required name="doctor" defaultValue="" aria-invalid={Boolean(fieldErrors.doctor)} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-950 aria-[invalid=true]:border-red-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
               <option value="" disabled>{t("clinic.labels.doctorPlaceholder", config.labels.doctorPlaceholder)}</option>
               {config.doctors.map((doctor) => <option key={doctor.name} value={doctor.name}>{doctor.name} — {doctor.specialty}</option>)}
@@ -120,12 +121,12 @@ export default function BookingForm({ config }: { config: ClinicConfig }) {
             {fieldErrors.doctor?.[0] ? <span className="mt-1 block text-xs text-red-600">{fieldErrors.doctor[0]}</span> : null}
           </label>
           <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">
-            {t("clinic.labels.dateLabel", config.labels.dateLabel)}
-            <input required name="date" type="date" aria-invalid={Boolean(fieldErrors.date)} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-950 aria-[invalid=true]:border-red-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
+            {t("clinic.labels.dateLabel", config.labels.dateLabel)} <span aria-hidden="true" className="text-red-600">*</span>
+            <input required name="date" type="date" min={new Date().toISOString().slice(0, 10)} aria-invalid={Boolean(fieldErrors.date)} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-950 aria-[invalid=true]:border-red-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
             {fieldErrors.date?.[0] ? <span className="mt-1 block text-xs text-red-600">{fieldErrors.date[0]}</span> : null}
           </label>
           <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">
-            {t("clinic.labels.timeLabel", config.labels.timeLabel)}
+            {t("clinic.labels.timeLabel", config.labels.timeLabel)} <span aria-hidden="true" className="text-red-600">*</span>
             <select required name="time" defaultValue="" aria-invalid={Boolean(fieldErrors.time)} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-950 aria-[invalid=true]:border-red-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
               <option value="" disabled>{t("clinic.labels.timePlaceholder", config.labels.timePlaceholder)}</option>
               {config.appointmentSlots.map((slot) => <option key={slot} value={slot}>{slot}</option>)}

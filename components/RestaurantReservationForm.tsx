@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { RestaurantConfig } from "@/types/site";
 import { queueSubmission } from "@/lib/offlineQueue";
+import { useLanguage } from "@/components/LanguageProvider";
 
 type Reservation = { name: string; phone: string; date: string; time: string; party: number };
 type FieldErrors = Record<string, string[] | undefined>;
@@ -14,6 +15,7 @@ export default function RestaurantReservationForm({
   config: RestaurantConfig;
   onConfirmed: (reservation: Reservation, reference: string) => void;
 }) {
+  const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
@@ -58,23 +60,24 @@ export default function RestaurantReservationForm({
 
   return (
     <form onSubmit={submitReservation} className="mt-6 grid gap-4 sm:grid-cols-2">
+      <p className="sm:col-span-2 text-xs text-slate-500 dark:text-slate-400"><span aria-hidden="true" className="font-bold text-red-600">*</span> {t("form.requiredFields", "Required fields")}</p>
       <label className="text-sm font-medium dark:text-slate-200">
-        {config.labels.reservationNameLabel}
-        <input required name="name" type="text" aria-invalid={Boolean(fieldErrors.name)} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 aria-[invalid=true]:border-red-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white" />
+        {config.labels.reservationNameLabel} <span aria-hidden="true" className="text-red-600">*</span>
+        <input required name="name" type="text" minLength={2} maxLength={100} aria-invalid={Boolean(fieldErrors.name)} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 aria-[invalid=true]:border-red-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white" />
         {fieldErrors.name?.[0] ? <span className="mt-1 block text-xs text-red-600">{fieldErrors.name[0]}</span> : null}
       </label>
       <label className="text-sm font-medium dark:text-slate-200">
-        {config.labels.reservationPhoneLabel}
-        <input required name="phone" type="tel" inputMode="tel" aria-invalid={Boolean(fieldErrors.phone)} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 aria-[invalid=true]:border-red-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white" />
+        {config.labels.reservationPhoneLabel} <span aria-hidden="true" className="text-red-600">*</span>
+        <input required name="phone" type="tel" inputMode="tel" minLength={7} maxLength={30} pattern="[0-9+()\-\s]{7,30}" title="Enter at least 7 digits; spaces, +, - and parentheses are allowed." aria-invalid={Boolean(fieldErrors.phone)} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 aria-[invalid=true]:border-red-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white" />
         {fieldErrors.phone?.[0] ? <span className="mt-1 block text-xs text-red-600">{fieldErrors.phone[0]}</span> : null}
       </label>
       <label className="text-sm font-medium dark:text-slate-200">
-        {config.labels.reservationDateLabel}
+        {config.labels.reservationDateLabel} <span aria-hidden="true" className="text-red-600">*</span>
         <input required name="date" type="date" min={today} aria-invalid={Boolean(fieldErrors.date)} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 aria-[invalid=true]:border-red-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white" />
         {fieldErrors.date?.[0] ? <span className="mt-1 block text-xs text-red-600">{fieldErrors.date[0]}</span> : null}
       </label>
       <label className="text-sm font-medium dark:text-slate-200">
-        {config.labels.reservationTimeLabel}
+        {config.labels.reservationTimeLabel} <span aria-hidden="true" className="text-red-600">*</span>
         <select required name="time" defaultValue="" aria-invalid={Boolean(fieldErrors.time)} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 aria-[invalid=true]:border-red-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white">
           <option value="" disabled>{config.labels.reservationTimePlaceholder}</option>
           {config.reservationSlots.map((slot) => <option key={slot} value={slot}>{slot}</option>)}
@@ -82,7 +85,7 @@ export default function RestaurantReservationForm({
         {fieldErrors.time?.[0] ? <span className="mt-1 block text-xs text-red-600">{fieldErrors.time[0]}</span> : null}
       </label>
       <label className="text-sm font-medium dark:text-slate-200">
-        {config.labels.reservationPartyLabel}
+        {config.labels.reservationPartyLabel} <span aria-hidden="true" className="text-red-600">*</span>
         <input required name="party" type="number" min="1" max="30" defaultValue="2" aria-invalid={Boolean(fieldErrors.party)} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 aria-[invalid=true]:border-red-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white" />
         {fieldErrors.party?.[0] ? <span className="mt-1 block text-xs text-red-600">{fieldErrors.party[0]}</span> : null}
       </label>

@@ -136,3 +136,6 @@ Object.assign(translations.ta, {
   "print.menu.title": "உணவக மெனு", "print.menu.category.Mains": "முக்கிய உணவுகள்", "print.menu.category.Small plates": "சிற்றுண்டிகள்", "print.menu.category.Dessert": "இனிப்புகள்", "print.menu.category.Drinks": "பானங்கள்",
   "print.catering.title": "உணவளிப்பு மேற்கோள்", "print.catering.estimatedQuote": "மதிப்பிடப்பட்ட உணவளிப்பு மேற்கோள்", "print.catering.package": "தொகுப்பு", "print.catering.rate": "விலை", "print.catering.perPerson": "ஒருவருக்கு", "print.catering.estimatedTotal": "மதிப்பிடப்பட்ட மொத்தம்", "print.catering.note": "இது ஒரு மதிப்பிடப்பட்ட மேற்கோள். இறுதித் தேர்வுகள், சேவைக் கட்டணங்கள் மற்றும் கிடைக்கும் தன்மை ஆகியவை உணவகத்தால் உறுதிப்படுத்தப்படும்.",
 });
+
+Object.assign(translations.si, { "form.requiredFields": "අනිවාර්ය ක්ෂේත්‍ර" });
+Object.assign(translations.ta, { "form.requiredFields": "தேவையான புலங்கள்" });

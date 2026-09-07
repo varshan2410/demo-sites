@@ -1,22 +1,23 @@
 import { z } from "zod";
 
-const phone = z.string().trim().min(7, "Enter a valid phone number").max(30);
+const name = z.string().trim().min(2, "Enter at least 2 characters").max(100, "Keep this under 100 characters");
+const phone = z.string().trim().regex(/^[0-9+()\-\s]{7,30}$/, "Enter a valid phone number (at least 7 digits)");
 const date = z.string().trim().regex(/^\d{4}-\d{2}-\d{2}$/, "Use YYYY-MM-DD format");
 const honeypot = z.string().max(0, "Spam submission rejected").optional().default("");
 
 export const clinicAppointmentSchema = z.object({
-  name: z.string().trim().min(2).max(100), phone,
-  service: z.string().trim().min(1).max(80), doctor: z.string().trim().min(2).max(100),
+  name, phone,
+  service: z.string().trim().min(1, "Choose a treatment").max(80), doctor: name,
   date, time: z.string().trim().regex(/^\d{2}:\d{2}$/, "Use HH:MM format"), website: honeypot,
 });
 
 export const hotelEnquirySchema = z.object({
-  name: z.string().trim().min(2).max(100), phone, room: z.string().trim().min(1).max(80),
+  name, phone, room: z.string().trim().min(1, "Choose a room").max(80),
   checkIn: date, checkOut: date, guests: z.coerce.number().int().min(1).max(20), website: honeypot,
 });
 
 export const restaurantReservationSchema = z.object({
-  name: z.string().trim().min(2).max(100), phone, date, time: z.string().trim().regex(/^\d{2}:\d{2}$/),
+  name, phone, date, time: z.string().trim().regex(/^\d{2}:\d{2}$/, "Choose an available time"),
   party: z.coerce.number().int().min(1).max(30), website: honeypot,
 });
 

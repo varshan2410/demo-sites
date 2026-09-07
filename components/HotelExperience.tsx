@@ -10,6 +10,7 @@ import ExperienceGallery from "@/components/ExperienceGallery";
 import BusinessContactSection from "@/components/BusinessContactSection";
 import HotelTravelDetails from "@/components/HotelTravelDetails";
 import { queueSubmission } from "@/lib/offlineQueue";
+import HotelPrintVoucher from "@/components/HotelPrintVoucher";
 
 type Currency = "LKR" | "USD" | "EUR" | "GBP";
 type FieldErrors = Record<string, string[] | undefined>;
@@ -171,13 +172,7 @@ export default function HotelExperience({ config: sourceConfig }: { config: Hote
       </section>
       <HotelTravelDetails contact={config.contact} theme={config.theme} title={config.labels.transferTitle} description={config.labels.transferDescription} directionsLabel={config.labels.directionsLabel} />
       <BusinessContactSection eyebrow={config.labels.contactEyebrow} title={config.labels.contactTitle} eyebrowKey="hotel.labels.contactEyebrow" titleKey="hotel.labels.contactTitle" mapTitle={config.labels.mapTitle} contact={config.contact} whatsapp={config.whatsapp} theme={config.theme} actionLabel="Chat on WhatsApp" actionKey="common.chatWhatsapp" />
-      {enquiry && isMounted ? createPortal(
-        <article id="hotel-voucher-receipt">
-          <div className="receipt-card">
-            <header className="receipt-header" style={{ backgroundColor: config.theme.primary }}><p style={{ margin: 0, fontSize: 12, fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase" }}>Stay enquiry voucher</p><h1 style={{ margin: "8px 0 0", fontSize: 26 }}>{config.siteName}</h1><p style={{ margin: "6px 0 0", opacity: .86 }}>{config.contact.address}</p></header>
-            <div className="receipt-body"><p style={{ margin: "0 0 20px", fontSize: 15 }}>Enquiry received · Reference <strong>{reference}</strong></p><div className="receipt-grid"><div><p className="receipt-label">Guest</p><p className="receipt-value">{enquiry.name}</p></div><div><p className="receipt-label">Room preference</p><p className="receipt-value">{enquiry.room}</p></div><div><p className="receipt-label">Check-in</p><p className="receipt-value">{enquiry.checkIn}</p></div><div><p className="receipt-label">Check-out</p><p className="receipt-value">{enquiry.checkOut}</p></div><div><p className="receipt-label">Guests</p><p className="receipt-value">{enquiry.guests}</p></div><div><p className="receipt-label">Status</p><p className="receipt-value">Pending availability</p></div></div><footer className="receipt-footer">This is an availability enquiry, not a confirmed stay. Our reservations team will contact you to confirm availability and your final rate in LKR.<br />{config.contact.hours}</footer></div>
-          </div>
-        </article>, document.body) : null}
+      {enquiry && isMounted ? createPortal(<HotelPrintVoucher config={config} enquiry={enquiry} reference={reference} />, document.body) : null}
     </>
   );
 }

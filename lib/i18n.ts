@@ -65,3 +65,13 @@ Object.assign(translations.ta, {
   "restaurant.labels.cateringEyebrow": "சுவைமிக்க கூடுகை", "restaurant.labels.perHeadLabel": "ஒருவருக்கு", "restaurant.labels.minimumGuestsLabel": "குறைந்தபட்ச விருந்தினர்கள்", "restaurant.labels.reservationNameLabel": "முழுப் பெயர்", "restaurant.labels.reservationPhoneLabel": "தொலைபேசி எண்", "restaurant.labels.reservationDateLabel": "தேதி", "restaurant.labels.reservationTimeLabel": "நேரம்", "restaurant.labels.reservationPartyLabel": "குழு அளவு", "restaurant.labels.reservationSubmitLabel": "மேசையைக் கோருங்கள்", "restaurant.labels.reservationConfirmationTitle": "மேசை கோரிக்கை பெறப்பட்டது", "restaurant.labels.reservationConfirmationReference": "உங்கள் முன்பதிவு எண் {reference}.",
   "restaurant.catering.0.name": "தோட்ட மதிய உணவு", "restaurant.catering.0.description": "மூன்று கறிகள், சிவப்பு அரிசி, சம்பல்கள், இனிப்பு மற்றும் குளிர்பானங்கள்.", "restaurant.catering.1.name": "தீவு விருந்து", "restaurant.catering.1.description": "கடல் உணவு, ஆப்பம் மற்றும் நேரடி கொத்து உடன் செஃப் பகிரும் மெனு.",
 });
+
+Object.assign(translations.si, {
+  "clinic.labels.timePlaceholder": "ලබාගත හැකි වේලාවක් තෝරන්න",
+  "restaurant.labels.reservationTimePlaceholder": "ලබාගත හැකි වේලාවක් තෝරන්න",
+});
+
+Object.assign(translations.ta, {
+  "clinic.labels.timePlaceholder": "கிடைக்கும் நேரத்தைத் தேர்ந்தெடுக்கவும்",
+  "restaurant.labels.reservationTimePlaceholder": "கிடைக்கும் நேரத்தைத் தேர்ந்தெடுக்கவும்",
+});

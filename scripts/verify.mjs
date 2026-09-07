@@ -51,7 +51,7 @@ async function run() {
   }
 
   const validRequests = [
-    ["Clinic appointment", "/api/clinic/appointments", { name: "Test Visitor", phone: "0771234567", service: "cleaning", doctor: "Dr. Nadeesha Perera", date: futureDate, time: "09:00" }],
+    ["Clinic appointment", "/api/clinic/appointments", { name: "Test Visitor", phone: "0771234567", service: "cleaning", doctor: "Dr. Nadeesha Perera", date: futureDate, time: "09:30" }],
     ["Hotel enquiry", "/api/hotel/enquiries", { name: "Test Visitor", phone: "0771234567", room: "ocean-suite", checkIn: futureDate, checkOut: new Date(Date.now() + 9 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10), guests: 2 }],
     ["Restaurant reservation", "/api/restaurant/reservations", { name: "Test Visitor", phone: "0771234567", date: futureDate, time: "19:00", party: 2 }],
   ];

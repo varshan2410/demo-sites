@@ -121,7 +121,10 @@ export default function BookingForm({ config }: { config: ClinicConfig }) {
           </label>
           <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">
             {t("clinic.labels.timeLabel", config.labels.timeLabel)}
-            <input required name="time" type="time" aria-invalid={Boolean(fieldErrors.time)} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-950 aria-[invalid=true]:border-red-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
+            <select required name="time" defaultValue="" aria-invalid={Boolean(fieldErrors.time)} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-950 aria-[invalid=true]:border-red-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
+              <option value="" disabled>{t("clinic.labels.timePlaceholder", config.labels.timePlaceholder)}</option>
+              {config.appointmentSlots.map((slot) => <option key={slot} value={slot}>{slot}</option>)}
+            </select>
             {fieldErrors.time?.[0] ? <span className="mt-1 block text-xs text-red-600">{fieldErrors.time[0]}</span> : null}
           <input name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
           </label>

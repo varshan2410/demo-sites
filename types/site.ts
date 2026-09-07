@@ -91,6 +91,7 @@ export interface ClinicLabels extends ShellLabels {
   doctorPlaceholder: string;
   dateLabel: string;
   timeLabel: string;
+  timePlaceholder: string;
   submitLabel: string;
   confirmationTitle: string;
   confirmationReference: string;
@@ -130,6 +131,7 @@ export interface ClinicConfig {
   whatsapp: WhatsAppConfig;
   navigation: NavigationItem[];
   labels: ClinicLabels;
+  appointmentSlots: string[];
   bookingReferencePrefix: string;
 }
 
@@ -225,6 +227,7 @@ export interface RestaurantLabels extends ShellLabels {
   reservationPhoneLabel: string;
   reservationDateLabel: string;
   reservationTimeLabel: string;
+  reservationTimePlaceholder: string;
   reservationPartyLabel: string;
   reservationSubmitLabel: string;
   reservationConfirmationTitle: string;
@@ -252,5 +255,6 @@ export interface RestaurantConfig extends SiteShellConfig {
   catering: CateringPackage[];
   whatsapp: WhatsAppConfig;
   labels: RestaurantLabels;
+  reservationSlots: string[];
   reservationReferencePrefix: string;
 }

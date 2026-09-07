@@ -7,9 +7,9 @@ import type { RestaurantConfig } from "@/types/site";
 import { useLanguage } from "@/components/LanguageProvider";
 import ExperienceGallery from "@/components/ExperienceGallery";
 import BusinessContactSection from "@/components/BusinessContactSection";
+import RestaurantReservationForm from "@/components/RestaurantReservationForm";
 
 type Reservation = { name: string; phone: string; date: string; time: string; party: number };
-type FieldErrors = Record<string, string[] | undefined>;
 
 export default function RestaurantExperience({ config: sourceConfig }: { config: RestaurantConfig }) {
   const { t } = useLanguage();
@@ -23,9 +23,6 @@ export default function RestaurantExperience({ config: sourceConfig }: { config:
   const [cart, setCart] = useState<Record<string, number>>({});
   const [reference, setReference] = useState("");
   const [reservation, setReservation] = useState<Reservation | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState("");
-  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [isMounted, setIsMounted] = useState(false);
   const localizedMenu = config.menu.map((item) => ({ ...item, name: t("restaurant.menu." + item.id, item.name), description: t("restaurant.menuDesc." + item.id, item.description) }));
   const categories = ["ALL", ...Array.from(new Set(localizedMenu.map((item) => item.category)))];
@@ -35,19 +32,6 @@ export default function RestaurantExperience({ config: sourceConfig }: { config:
 
   useEffect(() => setIsMounted(true), []);
   function updateCart(id: string, amount: number) { setCart((current) => ({ ...current, [id]: Math.max(0, (current[id] ?? 0) + amount) })); }
-
-  async function submitReservation(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setIsSubmitting(true); setError(""); setFieldErrors({});
-    try {
-      const response = await fetch("/api/restaurant/reservations", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.fromEntries(new FormData(event.currentTarget))) });
-      const result = await response.json();
-      if (!response.ok) { const fields = result.fields ?? {}; setError(Object.values(fields).flat().join(" ") || result.error || "Please check your details and try again."); setFieldErrors(fields); return; }
-      await new Promise((resolve) => setTimeout(resolve, 280));
-      setReference(result.reference); setReservation(result.data);
-    } catch (submitError) { setError(submitError instanceof Error ? submitError.message : "Unable to submit reservation."); }
-    finally { setIsSubmitting(false); }
-  }
 
   const orderMessage = cartItems.length ? "Hello Cinnamon & Lime, I would like to order:%0A%0A" + cartItems.map((item) => `${cart[item.id]} x ${item.name} - LKR ${(cart[item.id] * item.priceLKR).toLocaleString()}`).join("%0A") + `%0A%0ATotal: LKR ${total.toLocaleString()}` : config.whatsapp.defaultMessage;
 
@@ -59,7 +43,22 @@ export default function RestaurantExperience({ config: sourceConfig }: { config:
     <section id="catering" className="bg-orange-50 px-6 py-16 dark:bg-slate-900 md:py-24"><div className="mx-auto max-w-6xl"><p className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: config.theme.primary }}>{config.labels.cateringEyebrow}</p><h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-tight dark:text-white md:text-4xl">{config.labels.cateringTitle}</h2><div className="mt-10 grid gap-5 md:grid-cols-2">{config.catering.map((item) => <article key={item.name} className="rounded-3xl bg-white p-7 dark:bg-slate-950"><h3 className="text-xl font-semibold dark:text-white">{item.name}</h3><p className="mt-3 leading-7 text-slate-600 dark:text-slate-300">{item.description}</p><p className="mt-6 text-lg font-semibold dark:text-white">LKR {item.pricePerHeadLKR.toLocaleString()} <span className="text-sm font-normal text-slate-500">{config.labels.perHeadLabel}</span></p><p className="mt-1 text-sm text-slate-500">{item.minimumGuests} {config.labels.minimumGuestsLabel}</p></article>)}</div></div></section>
     <ExperienceGallery id="gallery" eyebrow={config.labels.galleryEyebrow} title={config.labels.galleryTitle} eyebrowKey="restaurant.labels.galleryEyebrow" titleKey="restaurant.labels.galleryTitle" images={config.gallery} accent={config.theme.primary} />
     <section id="social" className="bg-stone-100 px-6 py-16 dark:bg-slate-900 md:py-24"><div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center"><div><p className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: config.theme.primary }}>{config.labels.socialEyebrow}</p><h2 className="mt-3 text-3xl font-semibold tracking-tight dark:text-white md:text-4xl">{config.labels.socialTitle}</h2><p className="mt-5 max-w-md leading-7 text-slate-600 dark:text-slate-300">{config.labels.socialDescription}</p><a href={config.instagramUrl} target="_blank" rel="noopener noreferrer" className="ui-button mt-7 inline-flex rounded-full px-5 py-3 text-sm font-semibold text-white" style={{ backgroundColor: config.theme.primary }}>{config.labels.socialCtaLabel}</a></div><div className="grid grid-cols-3 gap-3">{config.gallery.slice(1, 4).map((image) => <div key={image.src} className="relative aspect-square overflow-hidden rounded-2xl"><Image src={image.src} alt={image.alt} fill sizes="(min-width: 1024px) 20vw, 33vw" className="object-cover" /></div>)}</div></div></section>
-    <section id="reserve" className="px-6 py-16 md:py-24"><div className="mx-auto max-w-xl rounded-3xl bg-stone-100 p-6 dark:bg-slate-900 sm:p-8">{reservation ? <div id="restaurant-reservation" className="text-center"><h2 className="text-2xl font-semibold dark:text-white">{config.labels.reservationConfirmationTitle}</h2><p className="mt-3 text-slate-600 dark:text-slate-300">{config.labels.reservationConfirmationReference.replace("{reference}", reference)}</p><button type="button" onClick={() => window.print()} className="ui-button mt-6 rounded-full border border-slate-300 px-5 py-3 text-sm font-semibold dark:border-slate-700 dark:text-white">{config.labels.printReservationLabel}</button></div> : <><h2 className="text-2xl font-semibold dark:text-white">{config.labels.reservationTitle}</h2><form onSubmit={submitReservation} className="mt-6 grid gap-4 sm:grid-cols-2">{[[config.labels.reservationNameLabel, "name", "text"], [config.labels.reservationPhoneLabel, "phone", "tel"], [config.labels.reservationDateLabel, "date", "date"], [config.labels.reservationTimeLabel, "time", "time"]].map(([label, name, type]) => <label key={name} className="text-sm font-medium dark:text-slate-200">{label}<input required name={name} type={type} className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-white" /></label>)}<label className="text-sm font-medium dark:text-slate-200">{config.labels.reservationPartyLabel}<input required name="party" type="number" min="1" defaultValue="2" className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-white" /></label>{error ? <p role="alert" className="sm:col-span-2 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p> : null}<button disabled={isSubmitting} type="submit" className="ui-button self-end rounded-full px-5 py-3 font-semibold text-white disabled:cursor-wait disabled:opacity-60" style={{ backgroundColor: config.theme.primary }}>{isSubmitting ? <>Submitting...</> : config.labels.reservationSubmitLabel}</button></form></>}</div></section>
+    <section id="reserve" className="px-6 py-16 md:py-24">
+      <div className="mx-auto max-w-xl rounded-3xl bg-stone-100 p-6 dark:bg-slate-900 sm:p-8">
+        {reservation ? (
+          <div id="restaurant-reservation" className="text-center">
+            <h2 className="text-2xl font-semibold dark:text-white">{config.labels.reservationConfirmationTitle}</h2>
+            <p className="mt-3 text-slate-600 dark:text-slate-300">{config.labels.reservationConfirmationReference.replace("{reference}", reference)}</p>
+            <button type="button" onClick={() => window.print()} className="ui-button mt-6 rounded-full border border-slate-300 px-5 py-3 text-sm font-semibold dark:border-slate-700 dark:text-white">{config.labels.printReservationLabel}</button>
+          </div>
+        ) : (
+          <>
+            <h2 className="text-2xl font-semibold dark:text-white">{config.labels.reservationTitle}</h2>
+            <RestaurantReservationForm config={config} onConfirmed={(nextReservation, nextReference) => { setReservation(nextReservation); setReference(nextReference); }} />
+          </>
+        )}
+      </div>
+    </section>
     <BusinessContactSection eyebrow={config.labels.contactEyebrow} title={config.labels.contactTitle} eyebrowKey="restaurant.labels.contactEyebrow" titleKey="restaurant.labels.contactTitle" mapTitle={config.labels.mapTitle} contact={config.contact} whatsapp={config.whatsapp} theme={config.theme} actionLabel="Chat on WhatsApp" actionKey="common.chatWhatsapp" />
     {isMounted ? createPortal(<article id="restaurant-menu-print"><div className="menu-print-card"><header style={{ borderBottom: `4px solid ${config.theme.primary}` }}><img src={config.theme.logoImage} alt="" /><div><p>Restaurant menu</p><h1>{config.siteName}</h1><span>{config.contact.address}</span></div></header>{categories.filter((item) => item !== "ALL").map((group) => <section key={group}><h2>{group}</h2>{config.menu.filter((item) => item.category === group).map((item) => <div key={item.id} className="menu-print-row"><div><strong>{item.name}</strong><p>{item.description}</p></div><strong>LKR {item.priceLKR.toLocaleString()}</strong></div>)}</section>)}<footer>{config.contact.hours}</footer></div></article>, document.body) : null}
     {reservation && isMounted ? createPortal(<article id="restaurant-reservation-receipt"><div className="receipt-card"><header className="receipt-header" style={{ backgroundColor: config.theme.primary }}><p style={{ margin: 0, fontSize: 12, fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase" }}>Reservation receipt</p><h1 style={{ margin: "8px 0 0", fontSize: 26 }}>{config.siteName}</h1></header><div className="receipt-body"><p style={{ margin: "0 0 20px", fontSize: 15 }}>Request received · Reference <strong>{reference}</strong></p><div className="receipt-grid"><div><p className="receipt-label">Guest</p><p className="receipt-value">{reservation.name}</p></div><div><p className="receipt-label">Party size</p><p className="receipt-value">{reservation.party}</p></div><div><p className="receipt-label">Date</p><p className="receipt-value">{reservation.date}</p></div><div><p className="receipt-label">Time</p><p className="receipt-value">{reservation.time}</p></div><div><p className="receipt-label">Status</p><p className="receipt-value">Pending confirmation</p></div></div><footer className="receipt-footer">This is a table request, not a confirmed reservation. Our team will contact you shortly.<br />{config.contact.hours}</footer></div></div></article>, document.body) : null}

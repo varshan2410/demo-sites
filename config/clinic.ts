@@ -84,6 +84,7 @@ export const clinicConfig = {
     doctorPlaceholder: "Select a dentist",
     dateLabel: "Preferred date",
     timeLabel: "Preferred time",
+    timePlaceholder: "Select an available time",
     submitLabel: "Confirm appointment request",
     confirmationTitle: "Appointment request received",
     confirmationReference: "Your reference number is {reference}.",
@@ -115,5 +116,6 @@ export const clinicConfig = {
     requestedTimeLabel: "Requested time",
     confirmationWhatsAppMessage: "Hello Sunshine Dental Clinic, I would like to confirm appointment {reference}. Patient: {name}. Treatment: {service}. Dentist: {doctor}. Date: {date}. Time: {time}.",
   },
+  appointmentSlots: ["08:30", "09:30", "10:30", "11:30", "14:00", "15:00", "16:00", "17:00"],
   bookingReferencePrefix: "SDC",
 } satisfies ClinicConfig;

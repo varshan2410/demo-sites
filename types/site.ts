@@ -183,3 +183,53 @@ export interface HotelConfig extends SiteShellConfig {
   labels: HotelLabels;
   bookingReferencePrefix: string;
 }
+
+export interface MenuItem {
+  id: string;
+  name: string;
+  description: string;
+  priceLKR: number;
+  category: string;
+  tags: string[];
+}
+
+export interface CateringPackage {
+  name: string;
+  description: string;
+  pricePerHeadLKR: number;
+  minimumGuests: number;
+}
+
+export interface RestaurantLabels extends ShellLabels {
+  menuEyebrow: string;
+  menuTitle: string;
+  menuAllLabel: string;
+  orderTitle: string;
+  orderEmptyLabel: string;
+  orderTotalLabel: string;
+  orderWhatsAppLabel: string;
+  cateringEyebrow: string;
+  cateringTitle: string;
+  perHeadLabel: string;
+  minimumGuestsLabel: string;
+  reservationTitle: string;
+  reservationNameLabel: string;
+  reservationPhoneLabel: string;
+  reservationDateLabel: string;
+  reservationTimeLabel: string;
+  reservationPartyLabel: string;
+  reservationSubmitLabel: string;
+  reservationConfirmationTitle: string;
+  reservationConfirmationReference: string;
+}
+
+export interface RestaurantConfig extends SiteShellConfig {
+  id: "restaurant";
+  tagline: string;
+  hero: HeroConfig;
+  menu: MenuItem[];
+  catering: CateringPackage[];
+  whatsapp: WhatsAppConfig;
+  labels: RestaurantLabels;
+  reservationReferencePrefix: string;
+}

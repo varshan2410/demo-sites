@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import type { ClinicConfig } from "@/types/site";
 import { useLanguage } from "@/components/LanguageProvider";
 import { queueSubmission } from "@/lib/offlineQueue";
+import ClinicPrintReceipt from "@/components/ClinicPrintReceipt";
 
 type BookingDetails = Record<"name" | "service" | "doctor" | "date" | "time", string>;
 type FieldErrors = Record<string, string[] | undefined>;
@@ -82,13 +83,7 @@ export default function BookingForm({ config }: { config: ClinicConfig }) {
             </div>
           </div>
         </section>
-        {isMounted ? createPortal(
-          <article id="appointment-receipt">
-            <div className="receipt-card">
-              <header className="receipt-header" style={{ backgroundColor: config.theme.primary }}><p style={{ margin: 0, fontSize: 12, fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase" }}>Appointment receipt</p><h1 style={{ margin: "8px 0 0", fontSize: 26 }}>{config.siteName}</h1><p style={{ margin: "6px 0 0", opacity: .86 }}>{config.contact.address}</p></header>
-              <div className="receipt-body"><p style={{ margin: "0 0 20px", fontSize: 15 }}>Request received · Reference <strong>{reference}</strong></p><div className="receipt-grid"><div><p className="receipt-label">Patient</p><p className="receipt-value">{booking.name}</p></div><div><p className="receipt-label">Treatment</p><p className="receipt-value">{booking.service}</p></div><div><p className="receipt-label">Preferred dentist</p><p className="receipt-value">{booking.doctor}</p></div><div><p className="receipt-label">Requested date</p><p className="receipt-value">{booking.date}</p></div><div><p className="receipt-label">Requested time</p><p className="receipt-value">{booking.time}</p></div><div><p className="receipt-label">Status</p><p className="receipt-value">Pending confirmation</p></div></div><footer className="receipt-footer">This is a request receipt, not a confirmed appointment. Our team will contact you via WhatsApp to confirm your visit.<br />{config.contact.hours}</footer></div>
-            </div>
-          </article>, document.body) : null}
+        {isMounted ? createPortal(<ClinicPrintReceipt config={config} booking={booking} reference={reference} />, document.body) : null}
       </>
     );
   }

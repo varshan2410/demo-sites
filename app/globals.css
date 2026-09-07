@@ -162,7 +162,7 @@ main:focus {
   #catering-quote-receipt,
   #restaurant-menu-print {
     color: #0f172a;
-    font-family: Arial, sans-serif;
+    font-family: "Noto Sans Sinhala", "Noto Sans Tamil", Arial, sans-serif;
   }
 
   #appointment-receipt .receipt-card { border: 1px solid #cbd5e1; border-radius: 12px; overflow: hidden; }

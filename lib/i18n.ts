@@ -66,6 +66,9 @@ Object.assign(translations.ta, {
   "restaurant.catering.0.name": "தோட்ட மதிய உணவு", "restaurant.catering.0.description": "மூன்று கறிகள், சிவப்பு அரிசி, சம்பல்கள், இனிப்பு மற்றும் குளிர்பானங்கள்.", "restaurant.catering.1.name": "தீவு விருந்து", "restaurant.catering.1.description": "கடல் உணவு, ஆப்பம் மற்றும் நேரடி கொத்து உடன் செஃப் பகிரும் மெனு.",
 });
 
+Object.assign(translations.si, { "whatsapp.cateringHeading": "ආහාර සැපයීමේ මිල කැඳවීමක් ලබා ගැනීමට කැමැත්තෙමි:", "whatsapp.package": "පැකේජය", "whatsapp.rate": "අනුපාතය", "whatsapp.estimatedTotal": "ඇස්තමේන්තුගත එකතුව", "whatsapp.cateringConfirmationRequest": "කරුණාකර ලබාගත හැකි බව, අවසන් තේරීම් සහ සේවා ගාස්තු තහවුරු කරන්න. ස්තුතියි!" });
+Object.assign(translations.ta, { "whatsapp.cateringHeading": "உணவளிப்பு மேற்கோளைப் பெற விரும்புகிறேன்:", "whatsapp.package": "தொகுப்பு", "whatsapp.rate": "விலை", "whatsapp.estimatedTotal": "மதிப்பிடப்பட்ட மொத்தம்", "whatsapp.cateringConfirmationRequest": "கிடைக்கும் தன்மை, இறுதித் தேர்வுகள் மற்றும் சேவைக் கட்டணங்களை உறுதிப்படுத்தவும். நன்றி!" });
+
 Object.assign(translations.si, {
   "clinic.labels.timePlaceholder": "ලබාගත හැකි වේලාවක් තෝරන්න",
   "restaurant.labels.reservationTimePlaceholder": "ලබාගත හැකි වේලාවක් තෝරන්න",
@@ -144,3 +147,11 @@ Object.assign(translations.si, { "restaurant.catering.minimumError": "මෙම 
 Object.assign(translations.ta, { "restaurant.catering.minimumError": "இந்தத் தொகுப்பிற்கு குறைந்தது {minimum} விருந்தினர்கள் தேவை." });
 Object.assign(translations.si, { "restaurant.catering.validGuestPrompt": "මිල කැඳවීම සෑදීමට අවම අමුත්තන් සංඛ්‍යාව ඇතුළත් කරන්න." });
 Object.assign(translations.ta, { "restaurant.catering.validGuestPrompt": "மேற்கோளை உருவாக்க குறைந்தபட்ச விருந்தினர் எண்ணிக்கையை உள்ளிடவும்." });
+
+Object.assign(translations.si, {
+  "whatsapp.greeting": "ආයුබෝවන් {business}!", "whatsapp.appointmentHeading": "මෙම හමුවීම් ඉල්ලීම තහවුරු කිරීමට කැමැත්තෙමි:", "whatsapp.stayHeading": "මෙම නවාතැන් විමසුම තහවුරු කිරීමට කැමැත්තෙමි:", "whatsapp.reference": "යොමු අංකය", "whatsapp.patient": "රෝගියා", "whatsapp.treatment": "ප්‍රතිකාරය", "whatsapp.dentist": "දන්ත වෛද්‍යවරයා", "whatsapp.date": "දිනය", "whatsapp.time": "වේලාව", "whatsapp.guest": "අමුත්තා", "whatsapp.room": "කාමරය", "whatsapp.checkIn": "පැමිණීම", "whatsapp.checkOut": "පිටවීම", "whatsapp.guests": "අමුත්තන්", "whatsapp.confirmationRequest": "කරුණාකර ලබාගත හැකි බව තහවුරු කරන්න. ස්තුතියි!",
+});
+
+Object.assign(translations.ta, {
+  "whatsapp.greeting": "வணக்கம் {business}!", "whatsapp.appointmentHeading": "இந்த சந்திப்பு கோரிக்கையை உறுதிப்படுத்த விரும்புகிறேன்:", "whatsapp.stayHeading": "இந்த தங்கல் விசாரணையை உறுதிப்படுத்த விரும்புகிறேன்:", "whatsapp.reference": "குறிப்பு", "whatsapp.patient": "நோயாளர்", "whatsapp.treatment": "சிகிச்சை", "whatsapp.dentist": "பல் மருத்துவர்", "whatsapp.date": "தேதி", "whatsapp.time": "நேரம்", "whatsapp.guest": "விருந்தினர்", "whatsapp.room": "அறை", "whatsapp.checkIn": "வருகை", "whatsapp.checkOut": "புறப்பாடு", "whatsapp.guests": "விருந்தினர்கள்", "whatsapp.confirmationRequest": "கிடைக்கும் தன்மையை உறுதிப்படுத்தவும். நன்றி!",
+});

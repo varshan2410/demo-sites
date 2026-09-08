@@ -34,9 +34,20 @@ export default function CateringQuoteBuilder({ packages, contact, whatsapp, them
 
   const whatsappUrl = useMemo(() => {
     if (!selectedPackage) return "#";
-    const message = `Hello ${siteName}, I would like a catering quote for ${selectedPackage.name}: ${guestCount} guests at LKR ${selectedPackage.pricePerHeadLKR.toLocaleString()} per person. Estimated total: LKR ${total.toLocaleString()}.`;
+    const message = [
+      t("whatsapp.greeting", "Hello {business}!").replace("{business}", siteName),
+      "",
+      t("whatsapp.cateringHeading", "I would like a catering quote:"),
+      "",
+      `${t("whatsapp.package", "Package")}: ${selectedPackage.name}`,
+      `${t("whatsapp.guests", "Guests")}: ${guestCount}`,
+      `${t("whatsapp.rate", "Rate")}: LKR ${selectedPackage.pricePerHeadLKR.toLocaleString()} ${t("print.catering.perPerson", "per person")}`,
+      `${t("whatsapp.estimatedTotal", "Estimated total")}: LKR ${total.toLocaleString()}`,
+      "",
+      t("whatsapp.cateringConfirmationRequest", "Please confirm availability, final selections, and service charges. Thank you!"),
+    ].join("\n");
     return `https://wa.me/${whatsapp.number}?text=${encodeURIComponent(message)}`;
-  }, [guestCount, selectedPackage, siteName, total, whatsapp.number]);
+  }, [guestCount, selectedPackage, siteName, t, total, whatsapp.number]);
 
   if (!selectedPackage) return null;
 

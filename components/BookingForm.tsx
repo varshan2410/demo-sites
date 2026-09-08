@@ -50,13 +50,20 @@ export default function BookingForm({ config }: { config: ClinicConfig }) {
   function formatWhatsAppMessage() {
     if (!booking) return config.whatsapp.defaultMessage;
 
-    return config.labels.confirmationWhatsAppMessage
-      .replace("{reference}", reference)
-      .replace("{name}", booking.name)
-      .replace("{service}", booking.service)
-      .replace("{doctor}", booking.doctor)
-      .replace("{date}", booking.date)
-      .replace("{time}", booking.time);
+    return [
+      t("whatsapp.greeting", "Hello {business}!").replace("{business}", config.siteName),
+      "",
+      t("whatsapp.appointmentHeading", "I would like to confirm this appointment request:"),
+      "",
+      `${t("whatsapp.reference", "Reference")}: ${reference}`,
+      `${t("whatsapp.patient", "Patient")}: ${booking.name}`,
+      `${t("whatsapp.treatment", "Treatment")}: ${booking.service}`,
+      `${t("whatsapp.dentist", "Dentist")}: ${booking.doctor}`,
+      `${t("whatsapp.date", "Date")}: ${booking.date}`,
+      `${t("whatsapp.time", "Time")}: ${booking.time}`,
+      "",
+      t("whatsapp.confirmationRequest", "Please confirm availability. Thank you!"),
+    ].join("\n");
   }
 
   if (booking) {

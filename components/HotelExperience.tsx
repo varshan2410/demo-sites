@@ -75,7 +75,20 @@ export default function HotelExperience({ config: sourceConfig }: { config: Hote
   }
 
   const whatsappMessage = enquiry
-    ? "Hello Kahanda Cove, I would like to confirm stay enquiry " + reference + ". " + enquiry.room + ", " + enquiry.checkIn + " to " + enquiry.checkOut + ", " + enquiry.guests + " guest(s)."
+    ? [
+        t("whatsapp.greeting", "Hello {business}!").replace("{business}", config.siteName),
+        "",
+        t("whatsapp.stayHeading", "I would like to confirm this stay enquiry:"),
+        "",
+        `${t("whatsapp.reference", "Reference")}: ${reference}`,
+        `${t("whatsapp.guest", "Guest")}: ${enquiry.name}`,
+        `${t("whatsapp.room", "Room")}: ${enquiry.room}`,
+        `${t("whatsapp.checkIn", "Check-in")}: ${enquiry.checkIn}`,
+        `${t("whatsapp.checkOut", "Check-out")}: ${enquiry.checkOut}`,
+        `${t("whatsapp.guests", "Guests")}: ${enquiry.guests}`,
+        "",
+        t("whatsapp.confirmationRequest", "Please confirm availability. Thank you!"),
+      ].join("\n")
     : config.whatsapp.defaultMessage;
 
   return (

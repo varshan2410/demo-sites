@@ -139,3 +139,8 @@ Object.assign(translations.ta, {
 
 Object.assign(translations.si, { "form.requiredFields": "අනිවාර්ය ක්ෂේත්‍ර" });
 Object.assign(translations.ta, { "form.requiredFields": "தேவையான புலங்கள்" });
+
+Object.assign(translations.si, { "restaurant.catering.minimumError": "මෙම පැකේජය සඳහා අවම වශයෙන් අමුත්තන් {minimum} ක් අවශ්‍ය වේ." });
+Object.assign(translations.ta, { "restaurant.catering.minimumError": "இந்தத் தொகுப்பிற்கு குறைந்தது {minimum} விருந்தினர்கள் தேவை." });
+Object.assign(translations.si, { "restaurant.catering.validGuestPrompt": "මිල කැඳවීම සෑදීමට අවම අමුත්තන් සංඛ්‍යාව ඇතුළත් කරන්න." });
+Object.assign(translations.ta, { "restaurant.catering.validGuestPrompt": "மேற்கோளை உருவாக்க குறைந்தபட்ச விருந்தினர் எண்ணிக்கையை உள்ளிடவும்." });
